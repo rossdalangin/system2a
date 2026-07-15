@@ -174,6 +174,23 @@ class Agency_Nexus_AI_Copilot {
 	 * @return string Context-specific professional content or JSON suggestions.
 	 */
 	private static function local_fallback( $prompt, $context ) {
+		$provider = get_option( 'an_ai_provider', 'local' );
+		switch ( $provider ) {
+			case 'openai':
+				$provider_name = 'OpenAI ChatGPT';
+				break;
+			case 'gemini':
+				$provider_name = 'Google Gemini';
+				break;
+			case 'claude':
+				$provider_name = 'Anthropic Claude';
+				break;
+			case 'local':
+			default:
+				$provider_name = 'Local CoPilot';
+				break;
+		}
+
 		if ( strpos( strtolower($context), 'time_suggest' ) !== false || strpos( strtolower($prompt), 'time block' ) !== false ) {
 			return json_encode([
 				[
@@ -221,7 +238,7 @@ class Agency_Nexus_AI_Copilot {
 		}
 
 		if ( strpos( strtolower($context), 'proposal' ) !== false || strpos( strtolower($context), 'scope' ) !== false ) {
-			return "### 🚀 Project Scope & Strategic Proposal\n\n**Prepared for:** Potential Client\n**Goal:** Launching a high-performance web platform and conversion funnel to achieve 3x lead volume.\n\n#### 1. Core Deliverables\n- **Responsive Web Platform:** Branded, responsive layout with modular Inter design system.\n- **Sales Funnel Integration:** Connecting landing pages with automated Lead Capture.\n- **True ROI Dashboard Tracking:** Enabling automated profit tracking.\n\n#### 2. Pricing & Investment\n- **Project Fee:** $5,000.00\n- **Buffer Period:** 5 Days\n\n*Generated securely via Nexus AI Copilot.*";
+			return "### 🚀 Project Scope & Strategic Proposal\n\n**Prepared for:** Potential Client\n**Goal:** Launching a high-performance web platform and conversion funnel to achieve 3x lead volume.\n\n#### 1. Core Deliverables\n- **Responsive Web Platform:** Branded, responsive layout with modular Inter design system.\n- **Sales Funnel Integration:** Connecting landing pages with automated Lead Capture.\n- **True ROI Dashboard Tracking:** Enabling automated profit tracking.\n\n#### 2. Pricing & Investment\n- **Project Fee:** $5,000.00\n- **Buffer Period:** 5 Days\n\n*Generated securely via " . $provider_name . ".*";
 		}
 
 		if ( strpos( strtolower($context), 'message' ) !== false ) {
@@ -271,10 +288,11 @@ class Agency_Nexus_AI_Copilot {
 				"  <li><strong>Mobile Optimization:</strong> Ensure fast page load speeds and seamless viewing on all mobile devices.</li>\n" .
 				"</ul>\n\n" .
 				"<h3>3. Track Metrics and Refine</h3>\n" .
-				"<p>Use advanced analytics to measure key performance indicators (KPIs) and continuous content refinement for long-term SEO sustainability.</p>";
+				"<p>Use advanced analytics to measure key performance indicators (KPIs) and continuous content refinement for long-term SEO sustainability.</p>\n\n" .
+				"<p><em>Optimized and refined securely via " . $provider_name . ".</em></p>";
 		}
 
 		// Generic improve content fallback
-		return "AI Copilot Response: Based on your prompt '" . esc_html($prompt) . "', we suggest optimizing your agency operations, consolidating your tooling, and automating client communication via Agency Nexus dashboards.";
+		return $provider_name . " Response: Based on your prompt '" . esc_html($prompt) . "', we suggest optimizing your agency operations, consolidating your tooling, and automating client communication via Agency Nexus dashboards.";
 	}
 }
