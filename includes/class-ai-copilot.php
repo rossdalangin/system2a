@@ -239,6 +239,41 @@ class Agency_Nexus_AI_Copilot {
 				"{{Your_Name}}";
 		}
 
+		if ( 'improve_title' === $context ) {
+			$parts = explode("\n\n", $prompt);
+			$text = trim(end($parts));
+			if (empty($text) || strlen($text) < 3) {
+				return "The Ultimate Guide to Scaling Your Solo Agency Operations";
+			}
+			$clean = trim(strip_tags($text), "\"' \t\n\r\0\x0B");
+			if (stripos($clean, 'how to') !== false) {
+				return "How to " . ucwords(trim(str_ireplace('how to', '', $clean))) . ": The Ultimate SEO Guide";
+			}
+			return "The Ultimate Guide to " . ucwords($clean) . " (SEO Case Study)";
+		}
+
+		if ( 'improve_content' === $context ) {
+			$parts = explode("\n\n", $prompt);
+			$text = trim(end($parts));
+			if (empty($text) || strlen($text) < 5) {
+				$text = "We help agencies optimize their workflow, save time, and scale with high-quality automated tools and dashboards.";
+			}
+			$clean = trim(strip_tags($text), "\"' \t\n\r\0\x0B");
+			return "<h2>The Ultimate Strategy for SEO Success</h2>\n\n" .
+				"<p>In today's competitive landscape, optimizing your content is crucial. Here is how you can elevate your brand and drive organic traffic:</p>\n\n" .
+				"<h3>1. Conduct a Thorough Content Audit</h3>\n" .
+				"<p>Identify high-impact keywords and optimize your existing pages to better align with user search intent. This forms the foundation of our improved strategy: <strong>" . esc_html($clean) . "</strong>.</p>\n\n" .
+				"<h3>2. Implement On-Page Best Practices</h3>\n" .
+				"<ul>\n" .
+				"  <li><strong>Targeted Keywords:</strong> Naturally integrate primary and secondary keywords throughout the headers and paragraphs.</li>\n" .
+				"  <li><strong>Engaging Meta Tags:</strong> Write compelling meta descriptions and titles to boost organic CTR.</li>\n" .
+				"  <li><strong>Internal Linking:</strong> Connect related articles using a topic-cluster model (Pillar and Cluster content).</li>\n" .
+				"  <li><strong>Mobile Optimization:</strong> Ensure fast page load speeds and seamless viewing on all mobile devices.</li>\n" .
+				"</ul>\n\n" .
+				"<h3>3. Track Metrics and Refine</h3>\n" .
+				"<p>Use advanced analytics to measure key performance indicators (KPIs) and continuous content refinement for long-term SEO sustainability.</p>";
+		}
+
 		// Generic improve content fallback
 		return "AI Copilot Response: Based on your prompt '" . esc_html($prompt) . "', we suggest optimizing your agency operations, consolidating your tooling, and automating client communication via Agency Nexus dashboards.";
 	}

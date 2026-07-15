@@ -2038,7 +2038,13 @@ class Agency_Nexus_Admin_Dashboard {
 		$text = isset($_POST['text']) ? sanitize_textarea_field($_POST['text']) : '';
 		$field_type = isset($_POST['field_type']) ? sanitize_text_field($_POST['field_type']) : 'content';
 
-		$prompt = "Improve and polish the following " . $field_type . " for our agency. Make it highly engaging, professional, persuasive, and clear. Output ONLY the improved version with no explanations, notes, quotes, or markdown wrappers:\n\n" . $text;
+		if ( 'title' === $field_type ) {
+			$prompt = "Improve and polish the following title for our agency. Make it highly SEO-friendly, catchy, under 60 characters, and optimized for search engine click-through rates. Output ONLY the improved title with no explanations, notes, quotes, or markdown wrappers:\n\n" . $text;
+		} elseif ( 'content' === $field_type ) {
+			$prompt = "Improve and polish the following content body for our agency. Make it highly SEO-friendly, comprehensive, engaging, structured with clear headings (like H2, H3) and paragraphs, naturally integrating relevant keywords. Output ONLY the improved content with no explanations, notes, quotes, or markdown wrappers:\n\n" . $text;
+		} else {
+			$prompt = "Improve and polish the following " . $field_type . " for our agency. Make it highly engaging, professional, persuasive, and clear. Output ONLY the improved version with no explanations, notes, quotes, or markdown wrappers:\n\n" . $text;
+		}
 		$improved = Agency_Nexus_AI_Copilot::generate( $prompt, 'improve_' . $field_type );
 
 		wp_send_json_success( [ 'improved' => $improved ] );
