@@ -2038,9 +2038,9 @@ class Agency_Nexus_Admin_Dashboard {
 		$text = isset($_POST['text']) ? sanitize_textarea_field($_POST['text']) : '';
 		$field_type = isset($_POST['field_type']) ? sanitize_text_field($_POST['field_type']) : 'content';
 
-		if ( 'title' === $field_type ) {
+		if ( 'title' === $field_type || strpos( $field_type, 'title' ) !== false ) {
 			$prompt = "Improve and polish the following title for our agency. Make it highly SEO-friendly, catchy, under 60 characters, and optimized for search engine click-through rates. Output ONLY the improved title with no explanations, notes, quotes, or markdown wrappers:\n\n" . $text;
-		} elseif ( 'content' === $field_type ) {
+		} elseif ( 'content' === $field_type || 'body' === $field_type || strpos( $field_type, 'content' ) !== false || strpos( $field_type, 'description' ) !== false || strpos( $field_type, 'notes' ) !== false ) {
 			$prompt = "Improve and polish the following content body for our agency. Make it highly SEO-friendly, comprehensive, engaging, structured with clear headings (like H2, H3) and paragraphs, naturally integrating relevant keywords. Output ONLY the improved content with no explanations, notes, quotes, or markdown wrappers:\n\n" . $text;
 		} else {
 			$prompt = "Improve and polish the following " . $field_type . " for our agency. Make it highly engaging, professional, persuasive, and clear. Output ONLY the improved version with no explanations, notes, quotes, or markdown wrappers:\n\n" . $text;

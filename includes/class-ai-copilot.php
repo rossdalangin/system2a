@@ -256,8 +256,8 @@ class Agency_Nexus_AI_Copilot {
 				"{{Your_Name}}";
 		}
 
-		if ( 'improve_title' === $context ) {
-			$parts = explode("\n\n", $prompt);
+		if ( 'improve_title' === $context || strpos( $context, 'title' ) !== false ) {
+			$parts = preg_split('/:[\s\r\n]+/', $prompt);
 			$text = trim(end($parts));
 			if (empty($text) || strlen($text) < 3) {
 				return "The Ultimate Guide to Scaling Your Solo Agency Operations";
@@ -269,8 +269,8 @@ class Agency_Nexus_AI_Copilot {
 			return "The Ultimate Guide to " . ucwords($clean) . " (SEO Case Study)";
 		}
 
-		if ( 'improve_content' === $context ) {
-			$parts = explode("\n\n", $prompt);
+		if ( 'improve_content' === $context || strpos( $context, 'content' ) !== false || strpos( $context, 'body' ) !== false || strpos( $context, 'description' ) !== false || strpos( $context, 'notes' ) !== false ) {
+			$parts = preg_split('/:[\s\r\n]+/', $prompt);
 			$text = trim(end($parts));
 			if (empty($text) || strlen($text) < 5) {
 				$text = "We help agencies optimize their workflow, save time, and scale with high-quality automated tools and dashboards.";
