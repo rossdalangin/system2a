@@ -95,6 +95,7 @@ class Agency_Nexus {
 		require_once AGENCY_NEXUS_PATH . 'includes/class-seeder.php';
 		require_once AGENCY_NEXUS_PATH . 'includes/class-license-manager.php';
 		require_once AGENCY_NEXUS_PATH . 'includes/class-base-module.php';
+		require_once AGENCY_NEXUS_PATH . 'includes/class-ai-copilot.php';
 		require_once AGENCY_NEXUS_PATH . 'includes/class-api-handler.php';
 		require_once AGENCY_NEXUS_PATH . 'includes/class-email-handler.php';
 		require_once AGENCY_NEXUS_PATH . 'includes/class-shortcodes.php';

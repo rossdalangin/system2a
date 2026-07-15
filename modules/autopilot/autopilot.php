@@ -115,7 +115,8 @@ class Agency_Nexus_Module_Autopilot extends Agency_Nexus_Base_Module {
 						<tr>
 							<th><label><?php _e('Rule Name', 'agency-nexus'); ?></label></th>
 							<td>
-								<input type="text" name="title" value="<?php echo $rule ? esc_attr($rule->title) : ''; ?>" required class="regular-text">
+								<input type="text" name="title" id="an_rule_title" value="<?php echo $rule ? esc_attr($rule->title) : ''; ?>" required class="regular-text">
+								<a href="#" class="an-ai-improve-link" data-target="#an_rule_title" data-type="rule_title" style="margin-left: 10px; text-decoration: none;">✨ <?php _e('AI Improve Title', 'agency-nexus'); ?></a>
 								<p class="description"><?php _e('Internal name for this automation. e.g., Onboarding Welcome', 'agency-nexus'); ?></p>
 							</td>
 						</tr>
@@ -163,6 +164,38 @@ class Agency_Nexus_Module_Autopilot extends Agency_Nexus_Base_Module {
 					<a href="?page=an-automations" class="button">Cancel</a>
 				</form>
 			</div>
+			<script>
+			jQuery(document).ready(function($) {
+				$('.an-ai-improve-link').on('click', function(e) {
+					e.preventDefault();
+					var $link = $(this);
+					var targetSel = $link.data('target');
+					var fieldType = $link.data('type');
+					var currentText = $(targetSel).val();
+
+					if (!currentText.trim()) {
+						alert('Please enter some text first to let AI improve it.');
+						return;
+					}
+
+					var originalText = $link.html();
+					$link.text('<?php _e("Improving...", "agency-nexus"); ?>').css('pointer-events', 'none');
+
+					$.post(ajaxurl, {
+						action: 'an_ai_improve_content',
+						text: currentText,
+						field_type: fieldType
+					}, function(response) {
+						$link.html(originalText).css('pointer-events', 'auto');
+						if (response.success && response.data.improved) {
+							$(targetSel).val(response.data.improved);
+						} else {
+							alert('AI improvement failed. Ensure your AI Copilot is fully configured.');
+						}
+					});
+				});
+			});
+			</script>
 			<?php
 			return;
 		}

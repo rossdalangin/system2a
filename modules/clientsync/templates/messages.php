@@ -48,13 +48,15 @@
 
 			<div id="chat-input" style="padding: 15px; border-top: 1px solid #eee; display: none;">
 				<?php if ( $is_team ) : ?>
-				<div style="margin-bottom: 10px;">
+				<div style="margin-bottom: 10px; display: flex; gap: 10px; align-items: center;">
 					<select id="canned-response-select" style="width: 200px;">
 						<option value=""><?php _e( 'Insert Canned Response...', 'agency-nexus' ); ?></option>
 						<?php foreach ($responses as $resp) : ?>
 							<option value="<?php echo esc_attr($resp->content); ?>"><?php echo esc_html($resp->title); ?></option>
 						<?php endforeach; ?>
 					</select>
+					<button type="button" class="button" id="an_ai_suggest_msg" style="margin-bottom: 0;"><?php _e( '✨ AI Suggest Response', 'agency-nexus' ); ?></button>
+						<span id="an_ai_msg_loading" style="display:none; color:#666; font-style:italic; margin-left:10px;"><?php _e( 'Thinking...', 'agency-nexus' ); ?></span>
 				</div>
 				<?php endif; ?>
 				<form id="an-message-form">
@@ -173,6 +175,30 @@ jQuery(document).ready(function($) {
 			$('#chat-message-text').val($('#chat-message-text').val() + content);
 			$(this).val('');
 		}
+	});
+
+	$('#an_ai_suggest_msg').on('click', function(e) {
+		e.preventDefault();
+		var clientId = $('#chat-client-id').val();
+		if (!clientId) {
+			alert('Please select a client first.');
+			return;
+		}
+		$('#an_ai_suggest_msg').prop('disabled', true);
+		$('#an_ai_msg_loading').show();
+		$.post(ajaxurl, {
+			action: 'an_ai_suggest_response',
+			client_id: clientId,
+			security: $('#security').val()
+		}, function(response) {
+			$('#an_ai_suggest_msg').prop('disabled', false);
+			$('#an_ai_msg_loading').hide();
+			if (response.success && response.data.suggestion) {
+				$('#chat-message-text').val(response.data.suggestion);
+			} else {
+				alert('AI Copilot was unable to draft a suggestion at this time.');
+			}
+		});
 	});
 
 	$('.chat-tab-btn').on('click', function() {

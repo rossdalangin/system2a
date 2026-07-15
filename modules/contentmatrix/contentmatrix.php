@@ -18,6 +18,8 @@ class Agency_Nexus_Module_Contentmatrix extends Agency_Nexus_Base_Module {
 		add_action( 'wp_ajax_an_update_content_date', [ $this, 'handle_update_content_date' ] );
 		add_action( 'wp_ajax_an_create_content', [ $this, 'handle_create_content' ] );
 		add_action( 'wp_ajax_an_delete_content', [ $this, 'handle_delete_content' ] );
+		add_action( 'wp_ajax_an_ai_generate_titles', [ $this, 'handle_ai_generate_titles' ] );
+		add_action( 'wp_ajax_an_ai_generate_gap_draft', [ $this, 'handle_ai_generate_gap_draft' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 	}
 
@@ -26,7 +28,9 @@ class Agency_Nexus_Module_Contentmatrix extends Agency_Nexus_Base_Module {
 			return;
 		}
 
-		if ( isset( $_GET['page'] ) && 'an-content-list' === $_GET['page'] ) {
+		$page = isset( $_GET['page'] ) ? $_GET['page'] : '';
+
+		if ( 'an-content-list' === $page ) {
 			global $wpdb;
 			$table_name = $wpdb->prefix . 'an_content';
 			$action = isset( $_GET['action'] ) ? $_GET['action'] : '';
@@ -90,18 +94,47 @@ class Agency_Nexus_Module_Contentmatrix extends Agency_Nexus_Base_Module {
 				exit;
 			}
 		}
+
+		if ( 'an-batch-automation' === $page ) {
+			if ( isset( $_POST['an_run_batch'] ) && check_admin_referer( 'an_batch_nonce' ) ) {
+				global $wpdb;
+				$project_id = intval( $_POST['project_id'] );
+				$count = isset( $_POST['batch_count'] ) ? intval( $_POST['batch_count'] ) : 0;
+				$titles = isset( $_POST['batch_titles'] ) ? explode( "\n", $_POST['batch_titles'] ) : [];
+
+				foreach ( $titles as $t ) {
+					$t = trim( $t );
+					if ( empty( $t ) ) continue;
+					$wpdb->insert( $wpdb->prefix . 'an_content', [
+						'project_id' => $project_id,
+						'title'      => $t,
+						'content'    => 'Batch generated draft content.',
+						'status'     => 'draft',
+						'platform'   => 'wordpress',
+						'created_at' => current_time( 'mysql' )
+					] );
+				}
+				wp_redirect( admin_url( 'admin.php?page=an-content-list&msg=added' ) );
+				exit;
+			}
+		}
 	}
 
 	public function enqueue_scripts( $hook ) {
 		$pages = [
 			'agency-nexus_page_an-content-calendar',
-			'agency-nexus_page_an-content-list'
+			'agency-nexus_page_an-content-list',
+			'agency-nexus_page_an-batch-automation',
+			'agency-nexus_page_an-keyword-gap'
 		];
 
 		if ( ! in_array( $hook, $pages ) ) {
 			return;
 		}
 		wp_enqueue_media();
+		wp_localize_script( 'jquery', 'an_contentmatrix', [
+			'security' => wp_create_nonce( 'an_calendar_nonce' )
+		] );
 	}
 
 	public function register_submenu() {
@@ -273,7 +306,7 @@ class Agency_Nexus_Module_Contentmatrix extends Agency_Nexus_Base_Module {
 										</div>
 									</td>
 									<td>
-										<button class="button button-small" onclick="alert('Creating draft for: <?php echo esc_js($gap->keyword); ?>')">Generate Draft</button>
+										<button class="button button-small an-ai-gap-btn" data-keyword="<?php echo esc_attr($gap->keyword); ?>" data-project-id="<?php echo $gap->project_id; ?>"><?php _e( 'Generate Draft', 'agency-nexus' ); ?></button>
 									</td>
 								</tr>
 							<?php endforeach; if(empty($gaps)) echo '<tr><td colspan="6">No keywords analyzed yet.</td></tr>'; ?>
@@ -281,6 +314,34 @@ class Agency_Nexus_Module_Contentmatrix extends Agency_Nexus_Base_Module {
 					</table>
 				</div>
 			</div>
+
+			<script>
+			jQuery(document).ready(function($) {
+				$('.an-ai-gap-btn').on('click', function(e) {
+					e.preventDefault();
+					var $btn = $(this);
+					var keyword = $btn.data('keyword');
+					var projectId = $btn.data('project-id');
+
+					$btn.prop('disabled', true).text('Generating...');
+
+					$.post(ajaxurl, {
+						action: 'an_ai_generate_gap_draft',
+						project_id: projectId,
+						keyword: keyword,
+						security: an_contentmatrix.security
+					}, function(response) {
+						if (response.success) {
+							alert(response.data.msg);
+							$btn.text('Draft Generated!').css('background', '#46b450').css('color', '#fff');
+						} else {
+							alert('Draft generation failed. Ensure your AI Copilot is active.');
+							$btn.prop('disabled', false).text('Generate Draft');
+						}
+					});
+				});
+			});
+			</script>
 
 			<div class="postbox" style="margin-top: 20px; padding: 20px;">
 				<h3><?php _e( 'Competitor Content Tracker', 'agency-nexus' ); ?></h3>
@@ -314,27 +375,6 @@ class Agency_Nexus_Module_Contentmatrix extends Agency_Nexus_Base_Module {
 		global $wpdb;
 		$projects = $wpdb->get_results( "SELECT id, title FROM {$wpdb->prefix}an_projects" );
 
-		if ( isset( $_POST['an_run_batch'] ) && check_admin_referer( 'an_batch_nonce' ) ) {
-			$project_id = intval( $_POST['project_id'] );
-			$count = intval( $_POST['batch_count'] );
-			$titles = explode( "\n", $_POST['batch_titles'] );
-
-			foreach ( $titles as $t ) {
-				$t = trim($t);
-				if ( empty($t) ) continue;
-				$wpdb->insert( $wpdb->prefix . 'an_content', [
-					'project_id' => $project_id,
-					'title'      => $t,
-					'content'    => 'Batch generated draft content.',
-					'status'     => 'draft',
-					'platform'   => 'wordpress',
-					'created_at' => current_time('mysql')
-				] );
-			}
-			wp_redirect( admin_url( 'admin.php?page=an-content-list&msg=added' ) );
-			exit;
-		}
-
 		?>
 		<div class="agency-nexus-wrap">
 			<h1><?php _e( 'Batch Content Automation', 'agency-nexus' ); ?></h1>
@@ -357,7 +397,9 @@ class Agency_Nexus_Module_Contentmatrix extends Agency_Nexus_Base_Module {
 						<tr>
 							<th><label><?php _e( 'Titles (one per line)', 'agency-nexus' ); ?></label></th>
 							<td>
-								<textarea name="batch_titles" rows="10" class="regular-text" required placeholder="Post Title 1&#10;Post Title 2"></textarea>
+								<textarea name="batch_titles" id="batch_titles" rows="10" class="regular-text" required placeholder="Post Title 1&#10;Post Title 2"></textarea>
+									<br><button type="button" class="button" id="an_ai_generate_titles" style="margin-top: 10px;"><?php _e( '🪄 Generate with AI Copilot', 'agency-nexus' ); ?></button>
+									<span id="an_ai_loading" style="display:none; margin-left:10px; color:#666; font-style:italic;"><?php _e( 'Generating...', 'agency-nexus' ); ?></span>
 							</td>
 						</tr>
 					</table>
@@ -366,6 +408,33 @@ class Agency_Nexus_Module_Contentmatrix extends Agency_Nexus_Base_Module {
 					</p>
 				</form>
 			</div>
+			<script>
+			jQuery(document).ready(function($) {
+				$('#an_ai_generate_titles').on('click', function(e) {
+					e.preventDefault();
+					var projectId = $('select[name="project_id"]').val();
+					if (!projectId) {
+						alert('Please select a project first.');
+						return;
+					}
+					$('#an_ai_generate_titles').prop('disabled', true);
+					$('#an_ai_loading').show();
+					$.post(ajaxurl, {
+						action: 'an_ai_generate_titles',
+						project_id: projectId,
+						security: an_contentmatrix.security
+					}, function(response) {
+						$('#an_ai_generate_titles').prop('disabled', false);
+						$('#an_ai_loading').hide();
+						if (response.success && response.data.titles) {
+							$('#batch_titles').val(response.data.titles);
+						} else {
+							alert('AI generation failed or not fully configured. Falling back to local ideas.');
+						}
+					});
+				});
+			});
+			</script>
 		</div>
 		<?php
 	}
@@ -498,14 +567,16 @@ class Agency_Nexus_Module_Contentmatrix extends Agency_Nexus_Base_Module {
 						<tr>
 							<th><label><?php _e('Title', 'agency-nexus'); ?></label></th>
 							<td>
-								<input type="text" name="title" value="<?php echo $content ? esc_attr($content->title) : ''; ?>" required class="regular-text">
+								<input type="text" name="title" id="an_content_title" value="<?php echo $content ? esc_attr($content->title) : ''; ?>" required class="regular-text">
+								<a href="#" class="an-ai-improve-link" data-target="#an_content_title" data-type="title" style="margin-left: 10px; text-decoration: none;">✨ <?php _e('AI Improve Title', 'agency-nexus'); ?></a>
 								<p class="description"><?php _e('Internal name or headline for the content.', 'agency-nexus'); ?></p>
 							</td>
 						</tr>
 						<tr>
 							<th><label><?php _e('Body Content', 'agency-nexus'); ?></label></th>
 							<td>
-								<textarea name="content" class="regular-text" rows="10"><?php echo $content ? esc_textarea($content->content) : ''; ?></textarea>
+								<textarea name="content" id="an_content_body" class="regular-text" rows="10"><?php echo $content ? esc_textarea($content->content) : ''; ?></textarea>
+									<br><a href="#" class="an-ai-improve-link" data-target="#an_content_body" data-type="content" style="text-decoration: none;">✨ <?php _e('AI Improve Content', 'agency-nexus'); ?></a>
 								<p class="description"><?php _e('The actual text or copy for the post.', 'agency-nexus'); ?></p>
 							</td>
 						</tr>
@@ -575,6 +646,35 @@ class Agency_Nexus_Module_Contentmatrix extends Agency_Nexus_Base_Module {
 					var frame = wp.media({ title: 'Select Media', multiple: false }).open().on('select', function(e){
 						var attachment = frame.state().get('selection').first().toJSON();
 						$('#media_url').val(attachment.url);
+					});
+				});
+
+				$('.an-ai-improve-link').on('click', function(e) {
+					e.preventDefault();
+					var $link = $(this);
+					var targetSel = $link.data('target');
+					var fieldType = $link.data('type');
+					var currentText = $(targetSel).val();
+
+					if (!currentText.trim()) {
+						alert('Please enter some text first to let AI improve it.');
+						return;
+					}
+
+					var originalText = $link.html();
+					$link.text('<?php _e("Improving...", "agency-nexus"); ?>').css('pointer-events', 'none');
+
+					$.post(ajaxurl, {
+						action: 'an_ai_improve_content',
+						text: currentText,
+						field_type: fieldType
+					}, function(response) {
+						$link.html(originalText).css('pointer-events', 'auto');
+						if (response.success && response.data.improved) {
+							$(targetSel).val(response.data.improved);
+						} else {
+							alert('AI improvement failed. Ensure your AI Copilot is fully configured.');
+						}
 					});
 				});
 			});
@@ -718,5 +818,56 @@ class Agency_Nexus_Module_Contentmatrix extends Agency_Nexus_Base_Module {
 			<a href="<?php echo admin_url( 'admin.php?page=an-content-calendar' ); ?>" class="button"><?php _e( 'Open Calendar', 'agency-nexus' ); ?></a>
 		</div>
 		<?php
+	}
+
+	/**
+	 * AJAX handler for generating titles using AI.
+	 */
+	public function handle_ai_generate_titles() {
+		check_ajax_referer( 'an_calendar_nonce', 'security' );
+		if ( ! Agency_Nexus_Permissions::can_access_nexus() ) {
+			wp_send_json_error( 'Unauthorized' );
+		}
+
+		$project_id = isset($_POST['project_id']) ? intval($_POST['project_id']) : 0;
+		global $wpdb;
+		$project_title = $wpdb->get_var( $wpdb->prepare( "SELECT title FROM {$wpdb->prefix}an_projects WHERE id = %d", $project_id ) );
+
+		$prompt = "Generate 5 high-converting, viral blog post or social media content titles for an agency project named: " . $project_title;
+		$titles = Agency_Nexus_AI_Copilot::generate( $prompt, 'content_batch' );
+		wp_send_json_success( [ 'titles' => $titles ] );
+	}
+
+	/**
+	 * AJAX handler for generating Keyword Gap draft using AI.
+	 */
+	public function handle_ai_generate_gap_draft() {
+		check_ajax_referer( 'an_calendar_nonce', 'security' );
+		if ( ! Agency_Nexus_Permissions::can_access_nexus() ) {
+			wp_send_json_error( 'Unauthorized' );
+		}
+
+		$project_id = isset($_POST['project_id']) ? intval($_POST['project_id']) : 0;
+		$keyword = isset($_POST['keyword']) ? sanitize_text_field($_POST['keyword']) : '';
+
+		if ( empty($keyword) || ! $project_id ) {
+			wp_send_json_error( 'Missing parameters.' );
+		}
+
+		global $wpdb;
+
+		$prompt = "Write a high-quality, comprehensive blog post content draft targeting the SEO keyword: \"" . $keyword . "\". Include an attention-grabbing headline, subheadings, and a strong call-to-action for an agency project.";
+		$draft_content = Agency_Nexus_AI_Copilot::generate( $prompt, 'keyword_gap_draft' );
+
+		$wpdb->insert( $wpdb->prefix . 'an_content', [
+			'project_id' => $project_id,
+			'title'      => 'AI Draft: ' . ucfirst($keyword),
+			'content'    => $draft_content,
+			'status'     => 'draft',
+			'platform'   => 'wordpress',
+			'created_at' => current_time('mysql')
+		] );
+
+		wp_send_json_success( [ 'msg' => 'Draft successfully generated and saved to Content Management!' ] );
 	}
 }

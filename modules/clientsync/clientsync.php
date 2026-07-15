@@ -20,6 +20,7 @@ class Agency_Nexus_Module_Clientsync extends Agency_Nexus_Base_Module {
 		add_action( 'wp_ajax_an_get_files', [ $this, 'handle_get_files' ] );
 		add_action( 'wp_ajax_an_delete_message', [ $this, 'handle_delete_message' ] );
 		add_action( 'wp_ajax_an_delete_file', [ $this, 'handle_delete_file' ] );
+		add_action( 'wp_ajax_an_ai_suggest_response', [ $this, 'handle_ai_suggest_response' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'agency_nexus_project_status_updated', [ $this, 'auto_send_satisfaction_check' ], 10, 2 );
 	}
@@ -382,5 +383,35 @@ class Agency_Nexus_Module_Clientsync extends Agency_Nexus_Base_Module {
 			<a href="<?php echo admin_url( 'admin.php?page=an-messages' ); ?>" class="button"><?php _e( 'Open Inbox', 'agency-nexus' ); ?></a>
 		</div>
 		<?php
+	}
+
+	/**
+	 * AJAX handler for suggesting a message response using AI.
+	 */
+	public function handle_ai_suggest_response() {
+		check_ajax_referer( 'an_clientsync_nonce', 'security' );
+		if ( ! Agency_Nexus_Permissions::can_access_nexus() ) {
+			wp_send_json_error( 'Unauthorized' );
+		}
+
+		$client_id = isset($_POST['client_id']) ? intval($_POST['client_id']) : 0;
+		global $wpdb;
+		// Retrieve the last message from the client (not sent by current user)
+		$last_client_msg = $wpdb->get_var( $wpdb->prepare( "
+			SELECT message
+			FROM {$wpdb->prefix}an_messages
+			WHERE client_id = %d AND sender_id != %d
+			ORDER BY created_at DESC
+			LIMIT 1
+		", $client_id, get_current_user_id() ) );
+
+		if ( empty( $last_client_msg ) ) {
+			$prompt = "Generate a professional, friendly check-in or introductory message for a client.";
+		} else {
+			$prompt = "Draft a professional, friendly response to the following client message: \"" . $last_client_msg . "\"";
+		}
+
+		$suggestion = Agency_Nexus_AI_Copilot::generate( $prompt, 'message' );
+		wp_send_json_success( [ 'suggestion' => $suggestion ] );
 	}
 }

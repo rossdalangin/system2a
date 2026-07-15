@@ -1,44 +1,49 @@
 # Sales Video Script: Agency Nexus — Calibrated Scale
 
-**Estimated Duration:** 2:30 – 3:30 Minutes
-**Tone:** Dynamic, confident, and authority-focused.
+**Duration:** 2 Minutes
+**Goal:** High-impact, visual, and action-oriented video script focusing on SaaS replacement, native AI Copilot, and absolute ROI.
 
 ---
 
-### [0:00 - 0:45] The Pain: Tool Chaos
-**Visual:** Quick cuts of agency owner looking at multiple open tabs. Zoom in on a credit card statement showing multiple SaaS subscriptions ($29 Asana, $15 Slack, $49 Content Planner, etc.).
-**Narrator:**
-"Look at your browser tabs right now.
-Asana. Slack. Stripe. Google Docs. A dozen spreadsheets.
-You’re spending more time *managing your tools* than *actually scaling your agency.*
-This isn't a system—it’s 'Tool Chaos.' And it’s leaking 20% of your profit every single month because your data is scattered and your team is context-switching.
-It’s time to stop the leak. It’s time to Calibrate."
+### [0:00 - 0:30] The Pain: Tool Chaos & Separated AI
 
-### [0:45 - 1:45] The Solution: The "Nexus" Command Center
-**Visual:** Smooth screen recording of the Agency Nexus Dashboard. Cursor moves quickly to **SmartOnboard**.
-**Narrator:**
-"Introducing **Agency Nexus**. The first comprehensive Agency Operating System built directly on WordPress.
-Instead of five apps, you have one Command Center.
-Watch. A lead comes in.
-In 60 seconds, you use the **Interactive Scope Builder** to generate a professional proposal.
-The client signs off in their **branded portal**, pays the deposit, and the project kicks off automatically.
-No more email ping-pong. No more manual data entry. Just flawless, 7-figure operations."
+**Visual:** Quick screen recording of someone jumping between Asana, Slack, Stripe, and a separate browser tab copy-pasting from ChatGPT. A timer in the corner ticks up, displaying "Time Lost to Friction."
 
-### [1:45 - 2:45] The ROI Engine (MoneyFlow & AutoPilot)
-**Visual:** Screen recording of **MoneyFlow** showing a 'True Profit' calculation. Transition to **AutoPilot** rule editor.
-**Narrator:**
-"But here’s the real secret. **MoneyFlow**.
-Agency Nexus tracks your project budget against team labor and expenses in real-time.
-For the first time, you’ll know your *true* ROI on every single account.
-And with the **AutoPilot** engine, your agency runs while you sleep.
-Rule: *If deliverable is approved, notify Slack and apply the next project milestone.*
-It’s like having a COO inside your WordPress dashboard."
+**Voiceover:**
+"This is the 'Tab Tax.' You're paying hundreds of dollars a month for project managers, team chat, invoicing, and AI tools. But because they don't talk to each other, you're losing hours of your life to manual copying and admin. You aren't growing; you're just busy."
 
-### [2:45 - End] The Close: Scaling Without Burnout
-**Visual:** Screen record of **BurnoutGuard** showing team health charts. Fade to Agency Nexus logo with tagline: "Manage Less. Scale More."
-**Narrator:**
-"Stop paying for 10 different subscriptions.
-Protect your team’s health with **BurnoutGuard**, and keep your agency’s IP in the **Marketplace**.
-Own your data. Own your brand. Own your time.
-Install Agency Nexus.
-Choose your license tier below and start your calibration journey today."
+---
+
+### [0:30 - 1:15] The Solution: The "Nexus" Command Center
+
+**Visual:** Transition to a clean WordPress admin screen. Click "Nexus" in the sidebar. Show the main dashboard. Click into **Settings > AI Copilot Configuration**, showcasing the multi-provider options (OpenAI, Gemini, Claude, and Local fallback).
+
+**Voiceover:**
+"Meet Agency Nexus. The first comprehensive Agency Operating System built directly inside WordPress, fully integrated with a unified **AI Copilot Engine**.
+No more disjointed apps or separate AI subscriptions. One tab, one secure database, one login."
+
+**Visual:** Show a lead record in EngageTrack. Click "Convert to Client." Show the Scope Builder in SmartOnboard, toggle an addon, and click **✨ AI Rewrite**. The deliverables instantly rewrite into high-ticket terms.
+
+**Voiceover:**
+"Now, the transition from a lead to a completed project is seamless and intelligent. Capture UTMs, score leads, build interactive scopes, and let your AI Copilot rewrite deliverables into high-ticket proposals instantly."
+
+---
+
+### [1:15 - 1:45] The Team & Profit Impact
+
+**Visual:** Show ContentMatrix, dragging a post on the calendar. Click **✨ AI Improve** to polish the draft. Click into MoneyFlow, showing the "True ROI" percentage widget. Click "Draft AI Reminder" next to an overdue invoice, showing a beautifully written email appear.
+
+**Voiceover:**
+"Plan content, analyze keyword gaps, and refine drafts using our context-aware Local CoPilot. Log hours against tasks and see your True Project ROI to the penny. And when an invoice is overdue, let the AI draft custom payment reminders based on client history automatically."
+
+---
+
+### [1:45 - END] Call to Action
+
+**Visual:** Show BurnoutGuard stress logs and the Referral Hub. Show a client logging into their white-labeled portal, viewing their invoices and file repository.
+
+**Voiceover:**
+"Protect your team from burnout, enforce operational boundaries, and deliver a stunning, 100% white-labeled experience that triples your perceived value.
+The 'Tool Chaos' ends today. Choose your licensing tier below and calibrate your agency with Agency Nexus."
+
+**Visual:** [Buy Agency Nexus Now] button with a 30-day money-back guarantee.

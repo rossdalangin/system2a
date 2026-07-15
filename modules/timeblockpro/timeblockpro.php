@@ -129,7 +129,8 @@ class Agency_Nexus_Module_Timeblockpro extends Agency_Nexus_Base_Module {
 						<tr>
 							<th><label><?php _e('Title', 'agency-nexus'); ?></label></th>
 							<td>
-								<input type="text" name="title" value="<?php echo $block ? esc_attr($block->title) : ''; ?>" required class="regular-text">
+								<input type="text" name="title" id="an_timeblock_title" value="<?php echo $block ? esc_attr($block->title) : ''; ?>" required class="regular-text">
+								<a href="#" class="an-ai-improve-link" data-target="#an_timeblock_title" data-type="timeblock_title" style="margin-left: 10px; text-decoration: none;">✨ <?php _e('AI Improve Title', 'agency-nexus'); ?></a>
 								<p class="description"><?php _e('What are you working on? e.g., Code Review, Client Call', 'agency-nexus'); ?></p>
 							</td>
 						</tr>
@@ -164,6 +165,38 @@ class Agency_Nexus_Module_Timeblockpro extends Agency_Nexus_Base_Module {
 					<a href="?page=an-time-blocking" class="button">Cancel</a>
 				</form>
 			</div>
+			<script>
+			jQuery(document).ready(function($) {
+				$('.an-ai-improve-link').on('click', function(e) {
+					e.preventDefault();
+					var $link = $(this);
+					var targetSel = $link.data('target');
+					var fieldType = $link.data('type');
+					var currentText = $(targetSel).val();
+
+					if (!currentText.trim()) {
+						alert('Please enter some text first to let AI improve it.');
+						return;
+					}
+
+					var originalText = $link.html();
+					$link.text('<?php _e("Improving...", "agency-nexus"); ?>').css('pointer-events', 'none');
+
+					$.post(ajaxurl, {
+						action: 'an_ai_improve_content',
+						text: currentText,
+						field_type: fieldType
+					}, function(response) {
+						$link.html(originalText).css('pointer-events', 'auto');
+						if (response.success && response.data.improved) {
+							$(targetSel).val(response.data.improved);
+						} else {
+							alert('AI improvement failed. Ensure your AI Copilot is fully configured.');
+						}
+					});
+				});
+			});
+			</script>
 			<?php
 			return;
 		}
@@ -186,32 +219,36 @@ class Agency_Nexus_Module_Timeblockpro extends Agency_Nexus_Base_Module {
 			echo '<div class="updated"><p>Smart suggestion applied to your schedule!</p></div>';
 		}
 
-		$suggestions = [
-			[
-				'title' => 'Morning Deep Work',
-				'desc'  => 'Based on your circadian rhythm, your cognitive load capacity is highest now.',
-				'type'  => 'deep_work',
-				'start' => date('Y-m-d 09:00:00'),
-				'end'   => date('Y-m-d 11:30:00'),
-				'icon'  => '🧠'
-			],
-			[
-				'title' => 'Post-Lunch Administrative Batch',
-				'desc'  => 'Handle emails and shallow tasks during the afternoon energy dip.',
-				'type'  => 'shallow_work',
-				'start' => date('Y-m-d 14:00:00'),
-				'end'   => date('Y-m-d 15:00:00'),
-				'icon'  => '📥'
-			],
-			[
-				'title' => 'Strategic Planning Break',
-				'desc'  => 'Prevent burnout by scheduling a mandatory disconnect period.',
-				'type'  => 'break',
-				'start' => date('Y-m-d 11:30:00'),
-				'end'   => date('Y-m-d 12:00:00'),
-				'icon'  => '☕'
-			]
-		];
+		$suggestions_data = Agency_Nexus_AI_Copilot::generate( 'Generate 3 optimal time block suggestions for the current date', 'time_suggest' );
+		$suggestions = json_decode( $suggestions_data, true );
+		if ( ! is_array( $suggestions ) || empty( $suggestions ) ) {
+			$suggestions = [
+				[
+					'title' => 'Morning Deep Work',
+					'desc'  => 'Based on your circadian rhythm, your cognitive load capacity is highest now.',
+					'type'  => 'deep_work',
+					'start' => date('Y-m-d 09:00:00'),
+					'end'   => date('Y-m-d 11:30:00'),
+					'icon'  => '🧠'
+				],
+				[
+					'title' => 'Post-Lunch Administrative Batch',
+					'desc'  => 'Handle emails and shallow tasks during the afternoon energy dip.',
+					'type'  => 'shallow_work',
+					'start' => date('Y-m-d 14:00:00'),
+					'end'   => date('Y-m-d 15:00:00'),
+					'icon'  => '📥'
+				],
+				[
+					'title' => 'Strategic Planning Break',
+					'desc'  => 'Prevent burnout by scheduling a mandatory disconnect period.',
+					'type'  => 'break',
+					'start' => date('Y-m-d 11:30:00'),
+					'end'   => date('Y-m-d 12:00:00'),
+					'icon'  => '☕'
+				]
+			];
+		}
 		?>
 		<div class="agency-nexus-wrap">
 			<h1><?php _e( 'AI-Powered Time Block Suggestions', 'agency-nexus' ); ?></h1>

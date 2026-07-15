@@ -209,6 +209,14 @@ class Agency_Nexus_Module_Smartonboard extends Agency_Nexus_Base_Module {
 			$description .= __( 'Selected Deliverables:', 'agency-nexus' ) . "\n- " . implode( "\n- ", array_map( 'sanitize_text_field', $deliverables ) );
 		}
 
+		if ( get_option( 'an_ai_enabled', 'no' ) === 'yes' ) {
+			$prompt = "Create a comprehensive, highly-converting professional project proposal based on: " . $description;
+			$ai_proposal = Agency_Nexus_AI_Copilot::generate( $prompt, 'proposal' );
+			if ( ! empty( $ai_proposal ) ) {
+				$description = $ai_proposal;
+			}
+		}
+
 		$wpdb->insert(
 			$wpdb->prefix . 'an_proposals',
 			[

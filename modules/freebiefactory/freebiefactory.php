@@ -246,7 +246,13 @@ class Agency_Nexus_Module_Freebiefactory extends Agency_Nexus_Base_Module {
 				<form method="post">
 					<?php wp_nonce_field('an_save_marketplace_nonce'); ?>
 					<table class="form-table">
-						<tr><th>Title</th><td><input type="text" name="title" value="<?php echo $item ? esc_attr($item->title) : ''; ?>" required class="regular-text"></td></tr>
+						<tr>
+							<th>Title</th>
+							<td>
+								<input type="text" name="title" id="an_product_title" value="<?php echo $item ? esc_attr($item->title) : ''; ?>" required class="regular-text">
+								<a href="#" class="an-ai-improve-link" data-target="#an_product_title" data-type="product_title" style="margin-left: 10px; text-decoration: none;">✨ <?php _e('AI Improve Title', 'agency-nexus'); ?></a>
+							</td>
+						</tr>
 						<tr><th>Type</th><td>
 							<select name="type">
 								<option value="template" <?php selected($item ? $item->type : '', 'template'); ?>>Template</option>
@@ -257,7 +263,13 @@ class Agency_Nexus_Module_Freebiefactory extends Agency_Nexus_Base_Module {
 						<tr><th>Version</th><td><input type="text" name="version" value="<?php echo $item ? esc_attr($item->version) : '1.0.0'; ?>" class="regular-text"></td></tr>
 						<tr><th>Compatible With</th><td><input type="text" name="compatible_with" value="<?php echo $item ? esc_attr($item->compatible_with) : ''; ?>" class="regular-text" placeholder="e.g. Elementor, Divi, WP 6.0+"></td></tr>
 						<tr><th>Price ($)</th><td><input type="number" step="0.01" name="price" value="<?php echo $item ? esc_attr($item->price) : '0.00'; ?>" required></td></tr>
-						<tr><th>Description</th><td><textarea name="content" class="regular-text" rows="5"><?php echo $item ? esc_textarea($item->content) : ''; ?></textarea></td></tr>
+						<tr>
+							<th>Description</th>
+							<td>
+								<textarea name="content" id="an_product_desc" class="regular-text" rows="5"><?php echo $item ? esc_textarea($item->content) : ''; ?></textarea>
+									<br><a href="#" class="an-ai-improve-link" data-target="#an_product_desc" data-type="product_description" style="text-decoration: none;">✨ <?php _e('AI Improve Description', 'agency-nexus'); ?></a>
+							</td>
+						</tr>
 						<tr><th>Product Image URL</th><td>
 							<input type="text" name="image_url" id="image_url" value="<?php echo $item ? esc_attr($item->image_url) : ''; ?>" class="regular-text">
 							<button type="button" id="upload_image_btn" class="button">Upload/Select Image</button>
@@ -284,6 +296,35 @@ class Agency_Nexus_Module_Freebiefactory extends Agency_Nexus_Base_Module {
 					var frame = wp.media({ title: 'Product File', multiple: false }).open().on('select', function(e){
 						var attachment = frame.state().get('selection').first().toJSON();
 						$('#file_url').val(attachment.url);
+					});
+				});
+
+				$('.an-ai-improve-link').on('click', function(e) {
+					e.preventDefault();
+					var $link = $(this);
+					var targetSel = $link.data('target');
+					var fieldType = $link.data('type');
+					var currentText = $(targetSel).val();
+
+					if (!currentText.trim()) {
+						alert('Please enter some text first to let AI improve it.');
+						return;
+					}
+
+					var originalText = $link.html();
+					$link.text('<?php _e("Improving...", "agency-nexus"); ?>').css('pointer-events', 'none');
+
+					$.post(ajaxurl, {
+						action: 'an_ai_improve_content',
+						text: currentText,
+						field_type: fieldType
+					}, function(response) {
+						$link.html(originalText).css('pointer-events', 'auto');
+						if (response.success && response.data.improved) {
+							$(targetSel).val(response.data.improved);
+						} else {
+							alert('AI improvement failed. Ensure your AI Copilot is fully configured.');
+						}
 					});
 				});
 			});
@@ -338,18 +379,94 @@ class Agency_Nexus_Module_Freebiefactory extends Agency_Nexus_Base_Module {
 					<table class="form-table">
 						<tr>
 							<th><label><?php _e('Title', 'agency-nexus'); ?></label></th>
-							<td><input type="text" name="title" value="<?php echo $q ? esc_attr($q->title) : ''; ?>" class="regular-text" required></td>
+							<td>
+								<input type="text" name="title" id="an_q_title" value="<?php echo $q ? esc_attr($q->title) : ''; ?>" class="regular-text" required>
+								<a href="#" class="an-ai-improve-link" data-target="#an_q_title" data-type="questionnaire_title" style="margin-left: 10px; text-decoration: none;">✨ <?php _e('AI Improve Title', 'agency-nexus'); ?></a>
+							</td>
 						</tr>
 						<tr>
 							<th><label><?php _e('Questions', 'agency-nexus'); ?></label></th>
 							<td id="questions-list">
 								<?php foreach($questions as $question): ?>
-									<div style="margin-bottom:10px;"><input type="text" name="questions[]" value="<?php echo esc_attr($question); ?>" class="large-text"></div>
+									<div style="margin-bottom:10px;"><input type="text" name="questions[]" value="<?php echo esc_attr($question); ?>" class="large-text an-q-input"></div>
 								<?php endforeach; ?>
-								<button type="button" class="button" onclick="jQuery('#questions-list').append('<div style=\'margin-bottom:10px;\'><input type=\'text\' name=\'questions[]\' class=\'large-text\'></div>')">+ Add Question</button>
+								<button type="button" class="button" onclick="jQuery('#questions-list').append('<div style=\'margin-bottom:10px;\'><input type=\'text\' name=\'questions[]\' class=\'large-text an-q-input\'></div>')">+ Add Question</button>
+								<button type="button" class="button" id="an-ai-improve-questions" style="margin-left:10px;">✨ <?php _e('AI Improve Questions', 'agency-nexus'); ?></button>
 							</td>
 						</tr>
 					</table>
+
+					<script>
+					jQuery(document).ready(function($) {
+						$('.an-ai-improve-link').on('click', function(e) {
+							e.preventDefault();
+							var $link = $(this);
+							var targetSel = $link.data('target');
+							var fieldType = $link.data('type');
+							var currentText = $(targetSel).val();
+
+							if (!currentText.trim()) {
+								alert('Please enter some text first to let AI improve it.');
+								return;
+							}
+
+							var originalText = $link.html();
+							$link.text('<?php _e("Improving...", "agency-nexus"); ?>').css('pointer-events', 'none');
+
+							$.post(ajaxurl, {
+								action: 'an_ai_improve_content',
+								text: currentText,
+								field_type: fieldType
+							}, function(response) {
+								$link.html(originalText).css('pointer-events', 'auto');
+								if (response.success && response.data.improved) {
+									$(targetSel).val(response.data.improved);
+								} else {
+									alert('AI improvement failed. Ensure your AI Copilot is fully configured.');
+								}
+							});
+						});
+
+						$('#an-ai-improve-questions').on('click', function(e) {
+							e.preventDefault();
+							var questions = [];
+							$('.an-q-input').each(function() {
+								var val = $(this).val();
+								if (val.trim()) {
+									questions.push(val);
+								}
+							});
+
+							var textToSend = questions.join("\n");
+							if (!textToSend.trim()) {
+								textToSend = "agency discovery onboarding questions";
+							}
+
+							var $btn = $(this);
+							$btn.prop('disabled', true).text('<?php _e("Polishing...", "agency-nexus"); ?>');
+
+							$.post(ajaxurl, {
+								action: 'an_ai_improve_content',
+								text: textToSend,
+								field_type: 'onboarding_questions'
+							}, function(response) {
+								$btn.prop('disabled', false).text('<?php _e("✨ AI Improve Questions", "agency-nexus"); ?>');
+								if (response.success && response.data.improved) {
+									var improvedQs = response.data.improved.split("\n");
+									$('.an-q-input').parent().remove();
+									improvedQs.forEach(function(q) {
+										q = q.trim();
+										if (q) {
+											$('#questions-list').prepend('<div style="margin-bottom:10px;"><input type="text" name="questions[]" value="' + q.replace(/"/g, '&quot;') + '" class="large-text an-q-input"></div>');
+										}
+									});
+								} else {
+									alert('AI improvement failed. Ensure your AI Copilot is fully configured.');
+								}
+							});
+						});
+					});
+					</script>
 					<input type="submit" name="an_save_questionnaire" class="button button-primary" value="Save Questionnaire">
 					<a href="?page=an-questionnaires" class="button">Cancel</a>
 				</form>
@@ -419,7 +536,8 @@ class Agency_Nexus_Module_Freebiefactory extends Agency_Nexus_Base_Module {
 						<tr>
 							<th><label for="title"><?php _e('Title', 'agency-nexus'); ?></label></th>
 							<td>
-								<input type="text" name="title" id="title" value="<?php echo $resource ? esc_attr($resource->title) : ''; ?>" class="regular-text" required>
+								<input type="text" name="title" id="an_resource_title" value="<?php echo $resource ? esc_attr($resource->title) : ''; ?>" class="regular-text" required>
+								<a href="#" class="an-ai-improve-link" data-target="#an_resource_title" data-type="resource_title" style="margin-left: 10px; text-decoration: none;">✨ <?php _e('AI Improve Title', 'agency-nexus'); ?></a>
 								<p class="description"><?php _e('Descriptive name of the resource. e.g., Standard Service Agreement', 'agency-nexus'); ?></p>
 							</td>
 						</tr>
@@ -445,7 +563,8 @@ class Agency_Nexus_Module_Freebiefactory extends Agency_Nexus_Base_Module {
 						<tr>
 							<th><label for="content"><?php _e('Text Content / Description', 'agency-nexus'); ?></label></th>
 							<td>
-								<textarea name="content" id="content" class="regular-text"><?php echo $resource ? esc_textarea($resource->content) : ''; ?></textarea>
+								<textarea name="content" id="an_resource_content" class="regular-text"><?php echo $resource ? esc_textarea($resource->content) : ''; ?></textarea>
+									<br><a href="#" class="an-ai-improve-link" data-target="#an_resource_content" data-type="resource_content" style="text-decoration: none;">✨ <?php _e('AI Improve Content', 'agency-nexus'); ?></a>
 								<p class="description"><?php _e('The text body of the template or a brief overview of how to use this resource.', 'agency-nexus'); ?></p>
 							</td>
 						</tr>
@@ -463,6 +582,35 @@ class Agency_Nexus_Module_Freebiefactory extends Agency_Nexus_Base_Module {
 					var frame = wp.media({ title: 'Upload Resource', multiple: false }).open().on('select', function(e){
 						var attachment = frame.state().get('selection').first().toJSON();
 						$('#file_url').val(attachment.url);
+					});
+				});
+
+				$('.an-ai-improve-link').on('click', function(e) {
+					e.preventDefault();
+					var $link = $(this);
+					var targetSel = $link.data('target');
+					var fieldType = $link.data('type');
+					var currentText = $(targetSel).val();
+
+					if (!currentText.trim()) {
+						alert('Please enter some text first to let AI improve it.');
+						return;
+					}
+
+					var originalText = $link.html();
+					$link.text('<?php _e("Improving...", "agency-nexus"); ?>').css('pointer-events', 'none');
+
+					$.post(ajaxurl, {
+						action: 'an_ai_improve_content',
+						text: currentText,
+						field_type: fieldType
+					}, function(response) {
+						$link.html(originalText).css('pointer-events', 'auto');
+						if (response.success && response.data.improved) {
+							$(targetSel).val(response.data.improved);
+						} else {
+							alert('AI improvement failed. Ensure your AI Copilot is fully configured.');
+						}
 					});
 				});
 			});
