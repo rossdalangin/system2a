@@ -1,0 +1,94 @@
+================================================================================
+                       AGENCY NEXUS SYSTEM DESCRIPTION
+================================================================================
+
+Agency Nexus is an enterprise-grade, all-in-one Agency Operating System (Agency OS)
+designed natively for WordPress. It is specifically engineered to centralize,
+streamline, and automate the entire lifecycle of freelancers, solo agency owners,
+and scaling digital teams. By consolidating ten crucial business departments into
+a single, cohesive, high-performance command center, Agency Nexus eliminates the
+"Tab Tax" (unnecessary multi-tool SaaS subscription fatigue) and drives peak
+operational efficiency.
+
+--------------------------------------------------------------------------------
+1. CORE ARCHITECTURAL MODULES
+--------------------------------------------------------------------------------
+
+*   💼 SmartOnboard (Client Onboarding & Deals):
+    Features an Interactive Scope Builder that standardizes services and tiers.
+    It performs an exact pricing computation breakdown (Project Scale base + Addon
+    Total = Subtotal - Special Terms discount = Final Total Price). Its built-in,
+    highly intelligent Special Terms parser dynamically detects flat discounts
+    (e.g., "$500") or percentage discounts (e.g., "10%"), subtracting them
+    exactly and recording the breakdown within the sent proposals.
+
+*   📅 ContentMatrix (Content Planning & Creation):
+    Enables visual drag-and-drop editorial scheduling across multiple channels,
+    fully optimized for PHP 8.1+ with robust type-safe date handling. It features
+    the Pillar Content Architect to organize content into visual topic authority
+    clusters and the AI Batch Automation tool to draft dozens of skeletons in seconds.
+
+*   ✅ ApprovalFlow (Posting & Sign-off):
+    A streamlined client review portal with side-by-side draft comparison engines,
+    revisions tracking, and annotations, preventing endless email loops.
+
+*   🧠 EngageTrack (Lead Intelligence & CRM):
+    Captures leads through optimized forms with built-in redirect builders. It
+    calculates strategic lead value scores (0-100), offers AI summaries, and
+    aggregates interactions from Instagram, LinkedIn, X, and Facebook with AI
+    interaction intent and sentiment analysis.
+
+*   💰 MoneyFlow (Financial Intelligence):
+    Tracks labor costs against team hours and expenses to calculate the exact,
+    real-time "True ROI" of every project. Generates professional invoicing
+    with custom logos and automated 5% late fees.
+
+*   💬 ClientSync (Communication Hub):
+     Branded, secure, real-time client-staff chat with shared resource storage
+     and role-based visibility.
+
+*   ⏰ TimeBlock Pro (Time & Schedule Management):
+    Built-in Focus Mode Pomodoro timer, Office Hour boundary enforcements with
+    automated responders, and AI Smart capacity scheduling suggestions.
+
+*   🏗 FreebieFactory (Resource Library):
+    Vault for swipe files, contract clauses, and discovery questionnaires
+    with built-in AI optimization.
+
+*   🤖 AutoPilot (Automation Center):
+    A flexible conditional automation system triggering actions (Zapier, Slack,
+    email briefings, or SOP creations) when events occur.
+
+*   ❤️ BurnoutGuard (Health & Sustainability):
+    Workload and stress monitors for team members, vacation calendars, and
+    referral networks to safely delegate excess projects.
+
+--------------------------------------------------------------------------------
+2. NATIVE UNIFIED AI COPILOT ENGINE
+--------------------------------------------------------------------------------
+
+The cognitive backbone of Agency Nexus is a native, context-aware AI Copilot Engine
+capable of interfacing seamlessly with top LLM providers (OpenAI ChatGPT, Google
+Gemini, and Anthropic Claude).
+
+*   SEO-Optimized Refinement:
+    The "✨ AI Improve" link next to ContentMatrix Titles and Body Content fields
+    sends specialized prompts to optimize titles (limited to 60 characters, catchy,
+    and CTR-focused) and refactor draft copies into robust, comprehensive article
+    templates featuring proper headings (H2, H3), paragraphs, lists, and keyword
+    flows.
+
+*   Loose Field & Context Matching:
+    The central AJAX handler matching engine processes fields loosely. Both
+    'body', 'content', 'description', and 'notes' fields seamlessly route to
+    the article optimizer, while 'title' fields route to the headline refiner.
+
+*   Elegant Local Fallback & Branding:
+    For local development or when API keys are absent, the system degrades
+    gracefully to the offline Local CoPilot mock engine. It dynamically retrieves
+    the selected default provider from the settings and customizes mock signatures
+    (e.g., branding responses as 'OpenAI ChatGPT Response' instead of static text)
+    and weaves user inputs (e.g., "Testing consulting business") directly into
+    premium, bespoke SEO article mockups.
+
+================================================================================
