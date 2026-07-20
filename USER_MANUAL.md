@@ -31,8 +31,9 @@ Before diving into the modules, ensure your core settings are calibrated:
 
 Streamline the transition from "Lead" to "Active Project" using interactive configuration tools and generative rewriting.
 
-*   **Interactive Scope Builder:** Select a base service (SEO, Design, etc.) and toggle addons. The dynamic calculator updates the budget in real-time.
-    *   *Sample Scope:* "High-Growth SEO" ($2,500 base) + "Backlink Outreach" ($500 addon) + "Technical Audit" ($750 addon) = **$3,750 Total**.
+*   **Interactive Scope Builder:** Select a base service (SEO, Design, etc.) and toggle addons. The dynamic calculator updates the budget in real-time. It performs an **exact pricing computation breakdown** (Project Scale base + Addon Total = Subtotal - Special Terms discount = Final Total Price).
+    *   **Automated Discount Parser:** The system dynamically parses "Special Terms" text inputs to automatically extract flat deductions (e.g., "$500", "500 discount", "500 off") or percentage discounts (e.g., "10%"), subtracts them from the subtotal exactly, and embeds the entire computation breakdown in the final proposal.
+    *   *Sample Scope:* "High-Growth SEO" ($2,500 base) + "Backlink Outreach" ($500 addon) = $3,000 Subtotal. Under Special Terms, entering "10% VIP Discount" applies a -$300 deduction, yielding an **Exact Proposal Total of $2,700**.
 *   **Proposals & AI Rewriter:** After building a scope, generate a Proposal. Before sending, use the **✨ AI Rewrite** button. The AI Copilot takes the raw scope list and draft terms, instantly turning them into professional, compelling legal/project deliverables designed to drive higher sign-off conversion. Your client can view this on the frontend, review the terms, and provide a digital signature.
 *   **Project Kickoff:** Once a proposal is signed, the system can automatically create an active Project in the database (via AutoPilot rules), notifying your team.
 
@@ -58,6 +59,8 @@ Scale your content engine and build topical authority using intelligent planning
 *   **Forecasting & SEO Keyword Gaps:** Each content item includes an engagement prediction. The **AI Copilot** parses your primary URLs and identifies topical gaps, automatically recommending high-ranking SEO keyword clusters to target next.
 *   **Visual Calendar:** Drag and drop content items to reschedule. Syncs automatically with your team's workload.
 *   **Batch Automation & Content Polish:** Use the Batch Automation tool to generate 10+ draft titles and skeletons for a project in a single click. Every draft features unconditional **✨ AI Improve** and **🪄 Polish** links to refine titles, SEO descriptions, and intro copy on the fly.
+    *   **SEO-Optimized Refinement Copy:** The AI Improve link beside the Title and Body Content fields has been optimized to produce search-engine friendly outputs. Titles are polished to be catchy, high-CTR, and limited to 60 characters. Body copy is refactored into comprehensive, structured article drafts featuring proper headings (H2, H3), paragraphs, bullet points, and keyword integration.
+    *   **SEO-Optimized Refinement Copy:** The AI Improve link beside the Title and Body Content fields has been optimized to produce search-engine friendly outputs. Titles are polished to be catchy, high-CTR, and limited to 60 characters. Body copy is refactored into comprehensive, structured article drafts featuring proper headings (H2, H3), paragraphs, bullet points, and keyword integration.
 
 ---
 
@@ -135,7 +138,9 @@ The **AI Copilot Engine** is a core engine that drives automation across the eco
 ### 🔍 Behind the Scenes: AJAX Architecture
 Every AI button (such as "✨ AI Improve" and "🪄 Generate with AI Copilot") makes a non-blocking request to the central WordPress AJAX action `wp_ajax_an_ai_improve_content`. This is routed to `Agency_Nexus_Admin_Dashboard::handle_ai_improve_content`, which performs security and capability checks, selects the active provider based on options, and securely interacts with the chosen API.
 
-If an API key is missing or calls fail, the backend degrades gracefully, logging detailed debug data to `wp-content/debug.log` while seamlessly utilizing the context-aware **Local CoPilot engine** to prevent frontend disruptions.
+*   **Loose Field & Context Matching:** The AJAX handler matches and processes fields loosely. Both `content`, `body`, `description`, and `notes` route seamlessly to the content improvement engine, while any string containing `title` is directed to the headline optimizer.
+*   **Dynamic Preferred Provider Branding:** If an API key is missing or calls fail, the backend degrades gracefully, logging detailed debug data while utilizing the **Local CoPilot engine** (fallback). The fallback response dynamically adapts to the selected preferred provider in Settings (e.g., dynamically branding outputs as 'OpenAI ChatGPT Response', 'Google Gemini Response', 'Anthropic Claude Response', or 'Local CoPilot Response' instead of a hardcoded mock).
+*   **Highly Custom Fallback Layouts:** For both local development and graceful degradation, fallback mockup are extremely dynamic. If "Testing consulting business" is passed to a body improvement fallback, the mock engine generates a comprehensive, fully custom, SEO-friendly HTML article weaving the input topic directly into heading structures and bullet points.
 
 ---
 
