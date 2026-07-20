@@ -234,11 +234,22 @@ class Agency_Nexus_Module_Smartonboard extends Agency_Nexus_Base_Module {
 		}
 		if ( ! empty( $special_terms ) ) {
 			$description .= __( 'Special Terms / Discounts:', 'agency-nexus' ) . " " . $special_terms . "\n";
-			if ( $discount > 0 ) {
-				$description .= sprintf( __( 'Applied Discount: -$%s', 'agency-nexus' ), number_format( $discount, 2 ) ) . "\n";
-			}
 		}
-		$description .= sprintf( __( 'Total Price: $%s', 'agency-nexus' ), number_format( $final_budget, 2 ) ) . "\n";
+
+		$scale_label  = isset( $scales[ $scale_key ]['label'] ) ? $scales[ $scale_key ]['label'] : ucfirst( $scale_key );
+		$scale_budget = isset( $scales[ $scale_key ]['budget'] ) ? $scales[ $scale_key ]['budget'] : 0;
+
+		$description .= "\n### " . __( 'Proposal Pricing Computation Breakdown', 'agency-nexus' ) . "\n";
+		$description .= sprintf( __( 'Project Scale (%s): $%s', 'agency-nexus' ), $scale_label, number_format( $scale_budget, 2 ) ) . "\n";
+		if ( $addon_total > 0 ) {
+			$description .= sprintf( __( 'Addons Total: +$%s', 'agency-nexus' ), number_format( $addon_total, 2 ) ) . "\n";
+		}
+		$description .= sprintf( __( 'Subtotal: $%s', 'agency-nexus' ), number_format( $budget, 2 ) ) . "\n";
+		if ( $discount > 0 ) {
+			$description .= sprintf( __( 'Applied Discount: -$%s', 'agency-nexus' ), number_format( $discount, 2 ) ) . "\n";
+		}
+		$description .= "----------------------------------------\n";
+		$description .= sprintf( __( 'Total Price: $%s', 'agency-nexus' ), number_format( $final_budget, 2 ) ) . "\n\n";
 
 		if ( get_option( 'an_ai_enabled', 'no' ) === 'yes' ) {
 			$prompt = "Create a comprehensive, highly-converting professional project proposal based on: " . $description;
