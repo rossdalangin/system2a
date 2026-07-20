@@ -196,7 +196,11 @@ class Agency_Nexus_Module_Smartonboard extends Agency_Nexus_Base_Module {
 		$client_id    = intval( $_POST['client_id'] );
 		$service_type = sanitize_text_field( $_POST['service_type'] );
 		$scale_key    = sanitize_text_field( $_POST['scale'] );
-		$scales       = get_option( 'an_scope_scales', [] );
+		$scales       = get_option( 'an_scope_scales', [
+			'small'  => [ 'label' => 'Small',  'budget' => 1000 ],
+			'medium' => [ 'label' => 'Medium', 'budget' => 5000 ],
+			'large'  => [ 'label' => 'Large',  'budget' => 15000 ]
+		] );
 		$budget       = isset( $scales[ $scale_key ]['budget'] ) ? $scales[ $scale_key ]['budget'] : 0;
 
 		$addon_total  = isset( $_POST['addon_total'] ) ? floatval( $_POST['addon_total'] ) : 0;
