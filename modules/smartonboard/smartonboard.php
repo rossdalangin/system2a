@@ -202,12 +202,43 @@ class Agency_Nexus_Module_Smartonboard extends Agency_Nexus_Base_Module {
 		$addon_total  = isset( $_POST['addon_total'] ) ? floatval( $_POST['addon_total'] ) : 0;
 		$budget      += $addon_total;
 
+		$expiry_date   = isset( $_POST['expiry_date'] ) ? sanitize_text_field( $_POST['expiry_date'] ) : '';
+		$special_terms = isset( $_POST['special_terms'] ) ? sanitize_textarea_field( $_POST['special_terms'] ) : '';
+
+		// Compute discount dynamically from special terms text
+		$discount = 0;
+		if ( ! empty( $special_terms ) ) {
+			// Check for percentage discount (e.g., "10%")
+			if ( preg_match( '/(\\d+)\\s*%/i', $special_terms, $matches ) ) {
+				$percentage = floatval( $matches[1] );
+				$discount = $budget * ( $percentage / 100 );
+			}
+			// Check for flat dollar discount (e.g., "$500" or "500 discount" or "500 off")
+			elseif ( preg_match( '/\\$\\s*(\\d+(\\.\\d{2})?)/i', $special_terms, $matches ) ) {
+				$discount = floatval( $matches[1] );
+			} elseif ( preg_match( '/(\\d+(\\.\\d{2})?)\\s*(off|discount|usd)/i', $special_terms, $matches ) ) {
+				$discount = floatval( $matches[1] );
+			}
+		}
+
+		$final_budget = max( 0, $budget - $discount );
+
 		$deliverables = isset( $_POST['deliverables'] ) ? (array) $_POST['deliverables'] : [];
 
 		$description = __( 'Generated from Scope Builder.', 'agency-nexus' ) . "\n\n";
 		if ( ! empty( $deliverables ) ) {
-			$description .= __( 'Selected Deliverables:', 'agency-nexus' ) . "\n- " . implode( "\n- ", array_map( 'sanitize_text_field', $deliverables ) );
+			$description .= __( 'Selected Deliverables:', 'agency-nexus' ) . "\n- " . implode( "\n- ", array_map( 'sanitize_text_field', $deliverables ) ) . "\n\n";
 		}
+		if ( ! empty( $expiry_date ) ) {
+			$description .= __( 'Proposal Expiry Date:', 'agency-nexus' ) . " " . $expiry_date . "\n";
+		}
+		if ( ! empty( $special_terms ) ) {
+			$description .= __( 'Special Terms / Discounts:', 'agency-nexus' ) . " " . $special_terms . "\n";
+			if ( $discount > 0 ) {
+				$description .= sprintf( __( 'Applied Discount: -$%s', 'agency-nexus' ), number_format( $discount, 2 ) ) . "\n";
+			}
+		}
+		$description .= sprintf( __( 'Total Price: $%s', 'agency-nexus' ), number_format( $final_budget, 2 ) ) . "\n";
 
 		if ( get_option( 'an_ai_enabled', 'no' ) === 'yes' ) {
 			$prompt = "Create a comprehensive, highly-converting professional project proposal based on: " . $description;
@@ -223,7 +254,7 @@ class Agency_Nexus_Module_Smartonboard extends Agency_Nexus_Base_Module {
 				'client_id'   => $client_id,
 				'title'       => sprintf( '%s Proposal (%s)', ucfirst( $service_type ), ucfirst( $scale_key ) ),
 				'description' => $description,
-				'budget'      => $budget,
+				'budget'      => $final_budget,
 				'status'      => 'sent',
 				'created_at'  => current_time( 'mysql' )
 			]
