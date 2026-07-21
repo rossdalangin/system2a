@@ -729,7 +729,7 @@ class Agency_Nexus_Module_Moneyflow extends Agency_Nexus_Base_Module {
 							<td><strong><?php echo esc_html($inv->number); ?></strong></td>
 							<td><?php echo esc_html($inv->project_title); ?></td>
 							<td><?php echo esc_html($inv->client_name); ?></td>
-							<td>$<?php echo number_format($inv->amount, 2); ?> <br><small>Paid: $<?php echo number_format($total_paid, 2); ?></small></td>
+							<td>$<?php echo number_format($inv->amount, 2); ?> <br><small>Paid: $<?php echo number_format(floatval($total_paid), 2); ?></small></td>
 							<td><span class="badge status-<?php echo $inv->status; ?>"><?php echo ucfirst($inv->status); ?></span></td>
 							<td><?php echo esc_html($inv->due_date); ?></td>
 							<td>
