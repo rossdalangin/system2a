@@ -355,7 +355,7 @@ class Agency_Nexus_Module_Moneyflow extends Agency_Nexus_Base_Module {
 							<td><?php echo date( 'Y-m-d', strtotime( $expense->created_at ) ); ?></td>
 							<td><?php echo $expense->project_id ? esc_html( $expense->project_title ) : '<em>General</em>'; ?></td>
 							<td><?php echo esc_html( ucfirst( $expense->category ) ); ?></td>
-							<td>$<?php echo number_format( $expense->amount, 2 ); ?></td>
+							<td>$<?php echo number_format( floatval($expense->amount), 2 ); ?></td>
 							<td><?php if ( $expense->receipt_url ) : ?><a href="<?php echo esc_url( $expense->receipt_url ); ?>" target="_blank">View Receipt</a><?php endif; ?></td>
 							<td><?php echo esc_html( $expense->note ); ?></td>
 							<td>
@@ -550,11 +550,11 @@ class Agency_Nexus_Module_Moneyflow extends Agency_Nexus_Base_Module {
 					<tbody>
 						<tr>
 							<td style="padding:15px; border-bottom:1px solid #edf2f7;"><?php echo esc_html($invoice->project_title); ?></td>
-							<td style="padding:15px; border-bottom:1px solid #edf2f7; text-align:right;">$<?php echo number_format($invoice->amount, 2); ?></td>
+							<td style="padding:15px; border-bottom:1px solid #edf2f7; text-align:right;">$<?php echo number_format(floatval($invoice->amount), 2); ?></td>
 						</tr>
 					</tbody>
 					<tfoot>
-						<tr><td style="padding:15px; text-align:right;"><strong>Total:</strong></td><td style="padding:15px; text-align:right;"><strong>$<?php echo number_format($invoice->amount, 2); ?></strong></td></tr>
+						<tr><td style="padding:15px; text-align:right;"><strong>Total:</strong></td><td style="padding:15px; text-align:right;"><strong>$<?php echo number_format(floatval($invoice->amount), 2); ?></strong></td></tr>
 					</tfoot>
 				</table>
 
@@ -729,7 +729,7 @@ class Agency_Nexus_Module_Moneyflow extends Agency_Nexus_Base_Module {
 							<td><strong><?php echo esc_html($inv->number); ?></strong></td>
 							<td><?php echo esc_html($inv->project_title); ?></td>
 							<td><?php echo esc_html($inv->client_name); ?></td>
-							<td>$<?php echo number_format($inv->amount, 2); ?> <br><small>Paid: $<?php echo number_format(floatval($total_paid), 2); ?></small></td>
+							<td>$<?php echo number_format(floatval($inv->amount), 2); ?> <br><small>Paid: $<?php echo number_format(floatval($total_paid), 2); ?></small></td>
 							<td><span class="badge status-<?php echo $inv->status; ?>"><?php echo ucfirst($inv->status); ?></span></td>
 							<td><?php echo esc_html($inv->due_date); ?></td>
 							<td>
@@ -922,7 +922,7 @@ class Agency_Nexus_Module_Moneyflow extends Agency_Nexus_Base_Module {
 			<h2><?php _e( 'MoneyFlow', 'agency-nexus' ); ?></h2>
 			<p><?php _e( 'Real-time Profitability (All Projects):', 'agency-nexus' ); ?></p>
 			<div style="font-size: 24px; font-weight: bold; color: <?php echo $color; ?>;">
-				$<?php echo number_format( $total_profit, 2 ); ?>
+				$<?php echo number_format( floatval($total_profit), 2 ); ?>
 			</div>
 			<p><small>
 				<?php echo sprintf( __( 'Revenue: $%.2f | Labor Cost: $%.2f', 'agency-nexus' ), $total_budget, $total_labor ); ?>
