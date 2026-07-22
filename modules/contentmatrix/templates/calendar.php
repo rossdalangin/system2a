@@ -64,7 +64,7 @@
 				<div class="day-number" style="color: #999; margin-bottom: 5px;"><?php echo $display_day; ?></div>
 				<?php
 				foreach ($content_items as $item) {
-					if (substr($item->scheduled_date, 0, 10) === $current_date) {
+					if (substr((string)$item->scheduled_date, 0, 10) === $current_date) {
 						?>
 						<div class="content-item" draggable="true" ondragstart="drag(event)" id="content-<?php echo $item->id; ?>" data-id="<?php echo $item->id; ?>" style="background: #e3f2fd; border-left: 4px solid #2196f3; padding: 5px; margin-bottom: 5px; cursor: move; font-size: 12px; position: relative;">
 							<?php echo esc_html($item->title); ?>

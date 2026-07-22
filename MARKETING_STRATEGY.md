@@ -10,7 +10,7 @@
 ## 2. Core Value Propositions (The 5 Pillars)
 1.  **Centralization:** Every lead, project, and message in one place. One login, zero context-switching, zero "Tab Tax."
 2.  **Profit Intelligence (MoneyFlow):** Real-time visibility into True Project ROI. Stop guessing if a project is profitable—know your margin to the cent.
-3.  **Standardization:** Use the Scope Builder, Pillar Content Architect, and Questionnaire library to deliver a consistent, 7-figure client experience every single time.
+3.  **Standardization:** Use the interactive, mathematically precise **Scope Builder** (which calculates Project Scale, Addons, and discounts exactly) alongside the Pillar Content Architect and Questionnaire library to deliver a consistent, 7-figure client experience every single time.
 4.  **Autonomy (AutoPilot):** Let automation handle the repetitive administrative tasks (onboarding sequences, client portal creations, late fee rules) while you lead.
 5.  **AI-Driven Operational Leverage (AI Copilot Engine):** Access built-in, context-aware AI content polishing, automatic email draft reminders, smart scheduling, sentiment alerting, and step-by-step SOP task brief generation directly within your database ecosystem.
 

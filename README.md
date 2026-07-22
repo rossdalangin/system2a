@@ -11,14 +11,15 @@ Stop jumping between five different SaaS tools and paying a massive "Tab Tax." C
 Agency Nexus is composed of 10 deeply integrated modules, fully enhanced by the native, context-aware AI Copilot:
 
 ### 1. 💼 SmartOnboard (Client Onboarding & Deals)
-*   **Interactive Scope Builder:** Build service packages with dynamic pricing and addons.
-*   **Proposal Generator:** Turn scopes into professional proposals with e-signature simulation.
+*   **Interactive Scope Builder:** Build service packages with dynamic pricing and addons. Features an **exact proposal pricing computation engine** that aggregates base scale budgets and addon fees, and automatically parses percentage or flat discounts from Special Terms.
+*   **Proposal Generator:** Turn scopes into professional proposals with e-signature simulation and full computation breakdowns embedded in descriptions.
 *   **AI Proposal Rewriter:** Leverage the AI Copilot to rewrite, polish, and optimize proposed deliverables and scope objectives instantly from the proposal view.
 
 ### 2. 📅 ContentMatrix (Content Planning & Creation)
 *   **Pillar Content Architect:** Map out topic clusters and maintain content authority.
-*   **Visual Calendar:** Drag-and-drop scheduling across multiple social and blog platforms.
+*   **Visual Calendar:** Drag-and-drop scheduling across multiple social and blog platforms, fully optimized for PHP 8.1+ with robust date-handling safety.
 *   **AI-Driven Batch Automation:** Generate dozens of content drafts, highly engaging blog outline ideas, and SEO keyword gap analysis using context-aware AI prompts in seconds.
+*   **SEO-Optimized AI Improve Copy:** The Title and Body field AI Improve links generate high-CTR titles (under 60 characters) and fully structured, keyword-optimized SEO content bodies (with proper H2, H3 tags, lists, and paragraphs).
 
 ### 3. ✅ ApprovalFlow (Posting & Sign-off)
 *   **Multi-Stage Drafting:** Move content from Idea -> Draft -> Review -> Approved.

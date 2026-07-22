@@ -17,7 +17,8 @@ This document is the operational backbone of your agency. It contains an immersi
 "When a prospect enters our world:
 - **Lead Scoring:** Don't chase every lead. Priority goes to scores > 70. Read the AI-generated Lead Summary to understand their pain points before the call.
 - **Nurture:** Click 'Email Lead' and use a **Canned Response** or let the AI Copilot suggest a personalized, context-rich response to book a call.
-- **Scoping:** Open the **Scope Builder**. select the service (e.g., 'Web Design'), choose the 'Scale' (Small/Medium/Large), and add 'Addons' (e.g., Logo Design).
+- **Scoping:** Open the **Scope Builder**. Select the service (e.g., 'Web Design'), choose the 'Scale' (Small/Medium/Large), and add 'Addons' (e.g., Logo Design).
+  - **Exact Pricing Computation:** Enter Expiry Date and Special Terms / Discounts. The system automatically parses percentage discounts (e.g., '10%') or flat dollar deductions (e.g., '$500') from Special Terms, subtracts them exactly, and embeds the entire computation breakdown in the final proposal's description.
 - **AI Deliverables Polish:** Click '✨ AI Rewrite' in the proposal view. The Copilot instantly converts rough scope bullets into professional, high-ticket deliverables and terms.
 - **The Close:** Click 'Generate Proposal' to send an interactive, e-signable document. When signed, AutoPilot triggers project kickoff."
 
@@ -33,7 +34,8 @@ This document is the operational backbone of your agency. It contains an immersi
 "We never use email for project details. Email is for marketing; Agency Nexus is for delivery.
 - **Communication Hub:** All chat happens here. It's real-time, branded, and secure. Use the '✨ AI Polish' assistant to ensure your replies are professional and clear before hitting send.
 - **Version Control:** When a draft is ready, upload it. The system archives the old version so the client can use the 'Side-by-Side Compare' tool.
-- **One-Click Sign-off:** The client portal allows for instant approvals. If they request changes, highlight their feedback and click '✨ AI Improve' to apply edits instantly."
+- **One-Click Sign-off:** The client portal allows for instant approvals. If they request changes, highlight their feedback and click '✨ AI Improve' to apply edits instantly.
+  - **SEO-Optimized Refinement:** For content titles and body copy, clicking 'AI Improve' outputs catchy, high-CTR headlines under 60 characters (for titles) and beautifully structured, keyword-optimized SEO article drafts with headings (H2, H3) and paragraphs (for body content)."
 
 ### 5. Financial Mastery & AI Overdue Reminders (MoneyFlow)
 "We track profit, not just revenue.
