@@ -37,7 +37,7 @@ But notice what happens next: the system automatically scores the lead from 0-10
 
 ## 4. Smart Scoping & AI Proposals (4:00 - 5:30)
 
-**Visual:** Select the lead, click "Convert to Client." Navigate to **Nexus > Proposals**, click "New Proposal." Open the Scope Builder. Choose "SEO Campaign," toggle several addons (Technical Audit, Backlink Outreach), showing the budget update. Click the **✨ AI Rewrite** button, showing the raw scope items turn into polished, persuasive deliverables copy. Click "Generate Proposal."
+**Visual:** Select the lead, click "Convert to Client." Navigate to **Nexus > Proposals**, click "New Proposal." Open the Scope Builder. Choose "SEO Campaign," toggle several addons (Technical Audit, Backlink Outreach), showing the budget update. Enter a "10% VIP Discount" in Special Terms. The budget automatically updates to the exact mathematically computed total. Click the **✨ AI Rewrite** button, showing the raw scope items turn into polished, persuasive deliverables copy. Click "Generate Proposal."
 
 **Voiceover:**
 "Once your lead is ready, convert them to a Client with one click, which automatically sets up their WordPress portal account.

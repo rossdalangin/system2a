@@ -53,7 +53,8 @@ Beyond the immediate relief of closing 14 browser tabs, here is the tangible, do
 
 *   **Reclaim 10+ Hours/Week:** Eliminate manual data entry, manual SOP drafting, and copy-pasting. Your AI-powered Daily Briefing tells you everything you need to know in 2 minutes.
 *   **Command Higher Fees:** When a client enters their branded, professional portal, your perceived value triples. You stop looking like a freelancer and start looking like an elite institution.
-*   **AI Leverage on Demand:** No more writer's block. Whether you're polishing an Instagram caption, replying to a frustrated client, or outlining a technical SEO campaign, the AI Copilot is right there, context-aware and ready to write.
+*   **AI Leverage on Demand:** No more writer's block. Whether you're polishing an Instagram caption, replying to a frustrated client, or outlining a technical SEO campaign, the AI Copilot is right there, generating SEO-optimized headlines under 60 characters and structured H2/H3 body drafts organically suited to rank.
+*   **Mathematically Precise Scope Builder:** Standardize and close clients collaboratively with exact pricing calculations. Compute Project Scales and Addons exactly, parse Special Terms for dynamic discounts automatically, and embed the entire computation breakdown directly in the proposal description.
 *   **Bulletproof Boundaries:** With office-hours enforcement and automatic after-hours AI responders, you can finally eat dinner with your family without your phone buzzing.
 
 ---

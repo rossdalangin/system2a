@@ -31,7 +31,7 @@ No more disjointed apps or separate AI subscriptions. One tab, one secure databa
 
 ### [1:15 - 1:45] The Team & Profit Impact
 
-**Visual:** Show ContentMatrix, dragging a post on the calendar. Click **✨ AI Improve** to polish the draft. Click into MoneyFlow, showing the "True ROI" percentage widget. Click "Draft AI Reminder" next to an overdue invoice, showing a beautifully written email appear.
+**Visual:** Show ContentMatrix, dragging a post on the calendar. Click **✨ AI Improve** to polish the draft into an SEO-optimized H2/H3 structured article. Click into MoneyFlow, showing the "True ROI" percentage widget and invoice totals safe from PHP 8.1+ deprecations. Click "Draft AI Reminder" next to an overdue invoice, showing a beautifully written email appear.
 
 **Voiceover:**
 "Plan content, analyze keyword gaps, and refine drafts using our context-aware Local CoPilot. Log hours against tasks and see your True Project ROI to the penny. And when an invoice is overdue, let the AI draft custom payment reminders based on client history automatically."

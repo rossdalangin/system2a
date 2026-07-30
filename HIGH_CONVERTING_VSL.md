@@ -67,7 +67,7 @@ For the first time, you’ll know—to the penny—how much you’re actually ma
 
 ## 3:15 - 4:00: THE "WORTH IT" (Answering: Will it be really worth it?)
 
-**Visual:** Comparison chart. Left side: The Chaos (Stressed face, $4k/year cost, 20 hours/week admin). Right side: The Nexus (Calm face, One-time cost, 2 hours/week admin, native AI). Zoom in on the "✨ AI Improve" content refiner inside the ContentMatrix visual calendar.
+**Visual:** Comparison chart. Left side: The Chaos (Stressed face, $4k/year cost, 20 hours/week admin). Right side: The Nexus (Calm face, One-time cost, 2 hours/week admin, native AI). Zoom in on the "✨ AI Improve" content refiner (which outputs high-CTR SEO headlines and structured H2/H3 content layouts) inside the ContentMatrix visual calendar. Show the Scope Builder performing mathematically exact budget calculations, subtracting flat/percentage discounts from Special Terms.
 **Narrator:**
 "Is it worth it? Let’s do the math.
 If you save just 5 hours of administrative friction and proposal writing a week—which is conservative—that’s 20 hours a month.

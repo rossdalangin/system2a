@@ -36,7 +36,7 @@ Imagine a single command center where the entire transition from a new lead to a
 ### 🛠 The 10 Modules of Massive Growth:
 
 1.  **MoneyFlow ROI Intelligence:** Real-time visibility into project profitability. Stop guessing—know exactly how much you're making after labor and expenses. Features **AI-drafted payment reminders**.
-2.  **SmartOnboard Builder & AI Rewriter:** Standardize your SEO, Design, or Ads packages. Choose a scale, toggle addons, and let the AI rewrite raw deliverables into professional, client-ready proposals.
+2.  **SmartOnboard Builder & AI Rewriter:** Standardize your SEO, Design, or Ads packages. Choose a scale, toggle addons, and let the Scope Builder calculate exact pricing breakdowns—automatically parsing Special Terms flat/percentage discounts. Let the AI rewrite raw deliverables into professional, client-ready proposals.
 3.  **ClientSync Hub & AI Chat:** A secure, branded environment for your clients. Move conversations out of messy inboxes into a chat hub with **AI reply suggestions and message polishing**.
 4.  **ContentMatrix & AI Forecasting:** Plan your topical authority clusters. Visualize your strategy on a drag-and-drop calendar and use **AI Batch Automation** with SEO keyword gap detection.
 5.  **ApprovalFlow Portal & AI Content Refiner:** One-click client sign-offs. Side-by-side version comparison means no more "Which draft is this?" confusion, with inline AI text polishing.
