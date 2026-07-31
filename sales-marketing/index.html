@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agency Nexus - The All-in-One Agency OS for WordPress</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --slate-50: #f8fafc;
+            --slate-100: #f1f5f9;
+            --slate-200: #e2e8f0;
+            --slate-700: #334155;
+            --slate-800: #1e293b;
+            --slate-900: #0f172a;
+            --indigo-600: #4f46e5;
+            --indigo-700: #4338ca;
+            --amber-500: #f59e0b;
+            --amber-600: #d97706;
+            --emerald-500: #10b981;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--slate-700);
+            background-color: var(--slate-50);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Lexend', sans-serif;
+            color: var(--slate-900);
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* HEADER */
+        header {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--slate-200);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: 15px 0;
+        }
+
+        header .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+            color: var(--slate-900);
+            text-decoration: none;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 800;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, var(--indigo-600), var(--indigo-700));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header nav a {
+            color: var(--slate-700);
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 20px;
+            transition: color 0.2s;
+        }
+
+        header nav a:hover {
+            color: var(--indigo-600);
+        }
+
+        .cta-header-btn {
+            background: var(--indigo-600);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .cta-header-btn:hover {
+            background: var(--indigo-700);
+            color: white;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            padding: 80px 0 60px 0;
+            background: radial-gradient(circle at 100% 100%, #e0e7ff 0%, var(--slate-50) 50%);
+            text-align: center;
+        }
+
+        .badge-promo {
+            display: inline-block;
+            background-color: #e0e7ff;
+            color: var(--indigo-600);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 9999px;
+            margin-bottom: 20px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--indigo-600), #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--slate-700);
+            max-width: 800px;
+            margin: 0 auto 40px auto;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--indigo-600), var(--indigo-700));
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--slate-800);
+            border: 1px solid var(--slate-200);
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--slate-100);
+            border-color: var(--slate-700);
+        }
+
+        /* PROBLEM SECTION */
+        .problem-section {
+            padding: 80px 0;
+            background-color: white;
+            border-top: 1px solid var(--slate-200);
+            border-bottom: 1px solid var(--slate-200);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 50px auto;
+        }
+
+        .section-header h2 {
+            font-size: 2.25rem;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--slate-700);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .problem-card {
+            background-color: var(--slate-50);
+            border-left: 4px solid #ef4444;
+            padding: 24px;
+            border-radius: 0 12px 12px 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .problem-card h4 {
+            font-size: 1.1rem;
+            color: var(--slate-900);
+            margin-bottom: 10px;
+        }
+
+        /* FEATURES SECTION */
+        .features-section {
+            padding: 80px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: white;
+            border: 1px solid var(--slate-200);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--indigo-600);
+        }
+
+        .feature-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background-color: #e0e7ff;
+            color: var(--indigo-600);
+            border-radius: 12px;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--slate-700);
+            font-size: 0.95rem;
+        }
+
+        .feature-tag {
+            display: inline-block;
+            background-color: var(--slate-100);
+            color: var(--slate-700);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 9999px;
+            margin-top: 15px;
+            text-transform: uppercase;
+        }
+
+        .feature-tag-ai {
+            background-color: #fef3c7;
+            color: var(--amber-600);
+        }
+
+        /* INTERACTIVE SCOPE CALCULATOR */
+        .calculator-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--slate-900), var(--slate-800));
+            color: white;
+        }
+
+        .calculator-section h2, .calculator-section p, .calculator-section h3 {
+            color: white;
+        }
+
+        .calculator-wrapper {
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .calc-form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .calc-group h4 {
+            font-family: 'Lexend', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: var(--amber-500);
+        }
+
+        .calc-options-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .calc-radio {
+            position: relative;
+        }
+
+        .calc-radio input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .calc-radio-label {
+            display: block;
+            background-color: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .calc-radio input:checked + .calc-radio-label {
+            background-color: var(--indigo-600);
+            border-color: var(--indigo-600);
+            box-shadow: 0 0 10px rgba(79, 70, 229, 0.5);
+        }
+
+        .calc-checkbox {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .calc-checkbox input {
+            margin-right: 10px;
+        }
+
+        .calc-input {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .calc-result-panel {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .calc-breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .calc-breakdown-row:last-child {
+            border-bottom: none;
+        }
+
+        .calc-breakdown-total {
+            font-size: 1.8rem;
+            color: var(--amber-500);
+            font-weight: 700;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px dashed rgba(255, 255, 255, 0.2);
+        }
+
+        /* PRICING SECTION */
+        .pricing-section {
+            padding: 80px 0;
+            background-color: var(--slate-100);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            align-items: stretch;
+            margin-top: 40px;
+        }
+
+        .pricing-card {
+            background-color: white;
+            border: 1px solid var(--slate-200);
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--indigo-600);
+            transform: scale(1.03);
+            box-shadow: var(--shadow-xl);
+            z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            .pricing-card.popular {
+                transform: none;
+            }
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--indigo-600);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 6px 18px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+        }
+
+        .pricing-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--slate-900);
+            margin: 20px 0;
+            font-family: 'Lexend', sans-serif;
+        }
+
+        .pricing-price span {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--slate-700);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
+
+        .pricing-features li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--emerald-500);
+            font-weight: 700;
+        }
+
+        /* TESTIMONIALS */
+        .testimonials {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .testimonial-card {
+            background-color: var(--slate-50);
+            border: 1px solid var(--slate-200);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--slate-900);
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--slate-900);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 60px 0;
+            border-top: 1px solid var(--slate-800);
+        }
+
+        footer h4 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        footer a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        footer .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        footer .footer-bottom {
+            text-align: center;
+            border-top: 1px solid var(--slate-800);
+            padding-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">🚀 <span>Agency Nexus</span></a>
+            <nav>
+                <a href="#features">Modules</a>
+                <a href="#calculator">Interactive Scope</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#pricing" class="cta-header-btn">Get Started</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <span class="badge-promo">WordPress Native Agency OS</span>
+            <h1>Stop Managing Your Tools.<br><span>Start Scaling Your Agency.</span></h1>
+            <p>Your Agency Is Losing 20% of Its Margin to "Tool Friction" and Admin Work. It's Time to Calibrate. Reclaim your time, impress your clients, and track every cent of profit with a native AI Copilot Engine built directly on WordPress.</p>
+            <div class="cta-group">
+                <a href="#pricing" class="btn-primary">View Plans & Pricing</a>
+                <a href="#calculator" class="btn-secondary">Try Interactive Scope</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="problem-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>The "Frankenstein" Tech Stack Is Killing Your Margins</h2>
+                <p>You have 14 tabs open. One for Asana, one for Slack, one for Stripe, one for Google Docs, one for your Content Calendar, and another for ChatGPT. It is costly, fragmented, and "Uncalibrated".</p>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <h4>High Tab Tax</h4>
+                    <p>Paying $300+/month in software subscriptions just to manage the work, let alone do it.</p>
+                </div>
+                <div class="problem-card">
+                    <h4>Communication Fatigue</h4>
+                    <p>Clients are confused and you spend 20 minutes digging through threads just to find a status.</p>
+                </div>
+                <div class="problem-card">
+                    <h4>Manual Labor</h4>
+                    <p>Chasing late invoices, manually drafting scope items, and writing step-by-step SOP briefings.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>10 Modules of Massive Growth</h2>
+                <p>A single cohesive ecosystem with a Unified AI Copilot powering operations, onboarding, and financials.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>MoneyFlow Intelligence</h3>
+                    <p>Real-time visibility into project profitability. Stop guessing—know exactly how much you're making after labor and expenses. Features AI-drafted automated billing and late-fee boundary enforcements.</p>
+                    <span class="feature-tag feature-tag-ai">AI CoPilot Enabled</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💼</div>
+                    <h3>SmartOnboard Scope Builder</h3>
+                    <p>Build service packages with dynamic pricing and addons. It performs an exact pricing computation breakdown, parsing Special Terms for dynamic discounts automatically, creating persuasive proposal descriptions.</p>
+                    <span class="feature-tag">Onboarding</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>ClientSync Hub</h3>
+                    <p>A secure, 100% white-labeled portal environment for your clients. Move conversations out of messy inboxes into a central chat hub with AI reply suggestions and message polishing.</p>
+                    <span class="feature-tag feature-tag-ai">AI CoPilot Enabled</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>ContentMatrix Calendar</h3>
+                    <p>Plan your topical authority clusters and draft outlines. Drag-and-drop visual scheduling across blog and social platforms, fully optimized for PHP 8.1+ type-safe dates.</p>
+                    <span class="feature-tag">Content</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3>ApprovalFlow & AI Refiner</h3>
+                    <p>One-click client sign-offs. Side-by-side version comparison means no more "Which draft is this?" confusion, with inline AI text polishing to improve Titles and Body copy into SEO-friendly layouts.</p>
+                    <span class="feature-tag feature-tag-ai">SEO & AI CoPilot</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AutoPilot Engine</h3>
+                    <p>Set custom automation rules like "If Invoice Paid -> Start Project". It can also automatically generate step-by-step task SOPs and briefs for your delivery team.</p>
+                    <span class="feature-tag">Automation</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">❤️</div>
+                    <h3>BurnoutGuard Analytics</h3>
+                    <p>Monitor team capacity and stress. Prevent high-value staff from burning out by identifying workload over-leverage before it happens. Referral hub handles extra delegations.</p>
+                    <span class="feature-tag">Health</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Lead CRM (EngageTrack)</h3>
+                    <p>Capture UTM lead data, score leads, and generate automated AI executive summaries of prospect inquiries. Unified social hub analyzes sentiment from networks.</p>
+                    <span class="feature-tag feature-tag-ai">AI CoPilot Enabled</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⏰</div>
+                    <h3>TimeBlock Pro</h3>
+                    <p>Built-in Focus Mode and Pomodoro timers. Use the AI Smart Scheduler to map focus blocks based on capacity, and enforce communications boundaries with out-of-office auto-responders.</p>
+                    <span class="feature-tag">Time</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">Vault</div>
+                    <h3>FreebieFactory</h3>
+                    <p>Manage your agency's intellectual property. Store SOPs, contract templates, and optimize client discovery questionnaires using AI to ensure client compliance.</p>
+                    <span class="feature-tag feature-tag-ai">AI CoPilot Enabled</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CALCULATOR -->
+    <section id="calculator" class="calculator-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Interactive Scope Budget Calculator</h2>
+                <p>Experience the precision of the Agency Nexus Scope Builder in real-time. Compute Project Scale, Addons, and automated Special Terms discount parsing exactly.</p>
+            </div>
+            <div class="calculator-wrapper">
+                <div class="calc-form">
+                    <div class="calc-group">
+                        <h4>1. Select Project Scale</h4>
+                        <div class="calc-options-grid">
+                            <label class="calc-radio">
+                                <input type="radio" name="calc-scale" value="small" data-price="1000" checked>
+                                <span class="calc-radio-label">Small ($1,000)</span>
+                            </label>
+                            <label class="calc-radio">
+                                <input type="radio" name="calc-scale" value="medium" data-price="5000">
+                                <span class="calc-radio-label">Medium ($5,000)</span>
+                            </label>
+                            <label class="calc-radio">
+                                <input type="radio" name="calc-scale" value="large" data-price="15000">
+                                <span class="calc-radio-label">Large ($15,000)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="calc-group">
+                        <h4>2. Select Add-ons</h4>
+                        <label class="calc-checkbox">
+                            <input type="checkbox" class="calc-addon" data-price="500"> Express Delivery (+$500)
+                        </label>
+                        <label class="calc-checkbox">
+                            <input type="checkbox" class="calc-addon" data-price="250"> 1-Month Support (+$250)
+                        </label>
+                        <label class="calc-checkbox">
+                            <input type="checkbox" class="calc-addon" data-price="1000"> Strategy Consultation (+$1,000)
+                        </label>
+                    </div>
+
+                    <div class="calc-group">
+                        <h4>3. Apply Coupon / Special Terms Discount</h4>
+                        <p style="font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-bottom: 8px;">Try typing "10% off" or "$500 discount" to see the parser automatically compute the exact price subtraction!</p>
+                        <input type="text" id="calc-special-terms" class="calc-input" placeholder="e.g. 10% VIP Discount, $500 coupon">
+                    </div>
+                </div>
+
+                <div class="calc-result-panel">
+                    <h3>Pricing Computation Breakdown</h3>
+                    <div style="margin-top: 20px;">
+                        <div class="calc-breakdown-row">
+                            <span>Project Scale:</span>
+                            <span id="res-scale">$1,000.00</span>
+                        </div>
+                        <div class="calc-breakdown-row">
+                            <span>Addons Total:</span>
+                            <span id="res-addons">+$0.00</span>
+                        </div>
+                        <div class="calc-breakdown-row">
+                            <span>Subtotal:</span>
+                            <span id="res-subtotal">$1,000.00</span>
+                        </div>
+                        <div class="calc-breakdown-row">
+                            <span>Special Terms Discount:</span>
+                            <span id="res-discount" style="color: #ef4444;">-$0.00</span>
+                        </div>
+                        <div class="calc-breakdown-total">
+                            <span>Total Price:</span>
+                            <span id="res-total">$1,000.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="pricing-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Choose Your Tier and Calibrate Today</h2>
+                <p>Simple, transparent pricing. Scale your solo agency or workforce with no monthly tabs.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Starter</h3>
+                        <p>Core operational tracking.</p>
+                        <div class="pricing-price">Free <span>/ forever</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Core CRM & Project Management</li>
+                        <li>Lead Capture Forms & UTM Tracking</li>
+                        <li>Standard Task & Dependency Management</li>
+                    </ul>
+                    <a href="#" class="btn-secondary" style="text-align: center; margin-top: 20px;">Get Started Free</a>
+                </div>
+
+                <div class="pricing-card popular">
+                    <div class="popular-badge">Most Popular</div>
+                    <div class="pricing-header">
+                        <h3>Pro</h3>
+                        <p>Perfect for solo agencies.</p>
+                        <div class="pricing-price">$199 <span>/ year</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>MoneyFlow Real-Time ROI Tracker</li>
+                        <li>Unified ClientSync Messaging & shared vault</li>
+                        <li>SOP Generator & Smart Schedules</li>
+                        <li>Automated Billing & AI Invoice Reminders</li>
+                        <li>Standard AI Copilot Assistants</li>
+                    </ul>
+                    <a href="#" class="btn-primary" style="text-align: center; margin-top: 20px;">Upgrade to Pro</a>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Agency VIP</h3>
+                        <p>Maximum scale & white labeling.</p>
+                        <div class="pricing-price">$999 <span>/ lifetime</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Everything in Pro</li>
+                        <li><strong>100% White-Labeling (Remove our brand completely)</strong></li>
+                        <li>BurnoutGuard Workforce Stress Suite</li>
+                        <li>Vacation Planner & Referral Partner Hub</li>
+                        <li>Advanced AI Models & Multi-Provider Connections</li>
+                        <li>Unlimited Site Activations & Priority Account Manager</li>
+                    </ul>
+                    <a href="#" class="btn-secondary" style="text-align: center; margin-top: 20px;">Buy Lifetime VIP</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Loved by Service Providers Worldwide</h2>
+                <p>Join 1,000+ agency owners who have unified their operations and eliminated the Frankenstein stack.</p>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Before Agency Nexus, I was spending over $350/mo across five different tools. Client communication was scattered in emails and Slack, and invoices were tracked in Google Sheets. Unifying my CRM, Scope Builder, and Projects on WordPress has reclaimed my focus and saved me thousands!"</p>
+                <div class="testimonial-author">Alex Rivera, Founder of Zenith Design Agency</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4>Agency OS</h4>
+                    <p>Built natively for WordPress. Under your complete control.</p>
+                </div>
+                <div>
+                    <h4>Links</h4>
+                    <a href="#features">Modules</a><br>
+                    <a href="#calculator">Interactive Scope</a><br>
+                    <a href="#pricing">Pricing</a>
+                </div>
+                <div>
+                    <h4>Support</h4>
+                    <a href="#">Contact Us</a><br>
+                    <a href="#">Documentation</a><br>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Agency Nexus. All rights reserved. 30-Day Money-Back Guarantee.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const scaleInputs = document.querySelectorAll('input[name="calc-scale"]');
+            const addonCheckboxes = document.querySelectorAll('.calc-addon');
+            const specialTermsInput = document.getElementById('calc-special-terms');
+
+            const resScale = document.getElementById('res-scale');
+            const resAddons = document.getElementById('res-addons');
+            const resSubtotal = document.getElementById('res-subtotal');
+            const resDiscount = document.getElementById('res-discount');
+            const resTotal = document.getElementById('res-total');
+
+            function updatePrice() {
+                // 1. Get scale price
+                let scalePrice = 0;
+                let scaleLabel = '';
+                scaleInputs.forEach(input => {
+                    if (input.checked) {
+                        scalePrice = parseFloat(input.dataset.price);
+                        scaleLabel = input.nextElementSibling.textContent;
+                    }
+                });
+
+                // 2. Get addons total
+                let addonsTotal = 0;
+                addonCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        addonsTotal += parseFloat(checkbox.dataset.price);
+                    }
+                });
+
+                // 3. Subtotal
+                let subtotal = scalePrice + addonsTotal;
+
+                // 4. Parse special terms discount
+                let specialTerms = specialTermsInput.value.trim();
+                let discount = 0;
+                if (specialTerms) {
+                    // Check for percentage (e.g. 10%)
+                    let percentageMatch = specialTerms.match(/(\d+)\s*%/i);
+                    if (percentageMatch) {
+                        let percentage = parseFloat(percentageMatch[1]);
+                        discount = subtotal * (percentage / 100);
+                    } else {
+                        // Check for flat discount (e.g. $500 or 500)
+                        let flatMatch = specialTerms.match(/\$\s*(\d+(\.\d{2})?)/i) || specialTerms.match(/(\d+(\.\d{2})?)\s*(off|discount)/i);
+                        if (flatMatch) {
+                            discount = parseFloat(flatMatch[1]);
+                        }
+                    }
+                }
+
+                // 5. Compute total price
+                let totalPrice = Math.max(0, subtotal - discount);
+
+                // Update DOM
+                resScale.textContent = `$${scalePrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                resAddons.textContent = `+$${addonsTotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                resSubtotal.textContent = `$${subtotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                resDiscount.textContent = `-$${discount.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                resTotal.textContent = `$${totalPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            }
+
+            // Bind Event Listeners
+            scaleInputs.forEach(input => input.addEventListener('change', updatePrice));
+            addonCheckboxes.forEach(checkbox => checkbox.addEventListener('change', updatePrice));
+            specialTermsInput.addEventListener('input', updatePrice);
+
+            // Initial computation
+            updatePrice();
+        });
+    </script>
+</body>
+</html>
