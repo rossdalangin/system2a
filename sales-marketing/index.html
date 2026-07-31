@@ -3,21 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agency Nexus - The All-in-One Agency OS for WordPress</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@700;800&display=swap" rel="stylesheet">
+    <title>Agency Nexus - The Ultimate Agency OS for WordPress</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --slate-50: #f8fafc;
             --slate-100: #f1f5f9;
             --slate-200: #e2e8f0;
+            --slate-300: #cbd5e1;
+            --slate-600: #475569;
             --slate-700: #334155;
             --slate-800: #1e293b;
             --slate-900: #0f172a;
+            --indigo-500: #6366f1;
             --indigo-600: #4f46e5;
             --indigo-700: #4338ca;
             --amber-500: #f59e0b;
             --amber-600: #d97706;
             --emerald-500: #10b981;
+            --emerald-600: #059669;
+            --rose-500: #f43f5e;
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
@@ -28,6 +33,10 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -41,24 +50,24 @@
         h1, h2, h3, h4 {
             font-family: 'Lexend', sans-serif;
             color: var(--slate-900);
-            font-weight: 700;
+            font-weight: 800;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
         }
 
         /* HEADER */
         header {
-            background-color: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--slate-200);
             position: sticky;
             top: 0;
             z-index: 50;
-            padding: 15px 0;
+            padding: 18px 0;
         }
 
         header .nav-container {
@@ -70,25 +79,30 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1.3rem;
+            gap: 12px;
+            font-size: 1.4rem;
             color: var(--slate-900);
             text-decoration: none;
             font-family: 'Lexend', sans-serif;
-            font-weight: 800;
+            font-weight: 900;
         }
 
         .logo span {
-            background: linear-gradient(135deg, var(--indigo-600), var(--indigo-700));
+            background: linear-gradient(135deg, var(--indigo-600), #7c3aed);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
+        header nav {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
         header nav a {
-            color: var(--slate-700);
+            color: var(--slate-600);
             text-decoration: none;
             font-weight: 500;
-            margin-left: 20px;
             transition: color 0.2s;
         }
 
@@ -97,45 +111,57 @@
         }
 
         .cta-header-btn {
-            background: var(--indigo-600);
+            background: linear-gradient(135deg, var(--indigo-600), var(--indigo-700));
             color: white;
-            padding: 8px 16px;
-            border-radius: 8px;
+            padding: 10px 20px;
+            border-radius: 10px;
             text-decoration: none;
             font-weight: 600;
-            transition: background-color 0.2s;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .cta-header-btn:hover {
-            background: var(--indigo-700);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
             color: white;
         }
 
         /* HERO SECTION */
         .hero {
-            padding: 80px 0 60px 0;
-            background: radial-gradient(circle at 100% 100%, #e0e7ff 0%, var(--slate-50) 50%);
+            padding: 100px 0 80px 0;
+            background: radial-gradient(circle at 100% 100%, #e0e7ff 0%, var(--slate-50) 60%);
             text-align: center;
+            border-bottom: 1px solid var(--slate-200);
         }
 
         .badge-promo {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             background-color: #e0e7ff;
             color: var(--indigo-600);
             font-size: 0.85rem;
             font-weight: 600;
-            padding: 6px 16px;
+            padding: 8px 18px;
             border-radius: 9999px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             letter-spacing: 0.05em;
             text-transform: uppercase;
         }
 
         .hero h1 {
-            font-size: 3rem;
-            line-height: 1.2;
+            font-size: 3.5rem;
+            line-height: 1.15;
             margin-bottom: 24px;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
+            color: var(--slate-900);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
         }
 
         .hero h1 span {
@@ -145,15 +171,16 @@
         }
 
         .hero p {
-            font-size: 1.25rem;
+            font-size: 1.35rem;
             color: var(--slate-700);
-            max-width: 800px;
-            margin: 0 auto 40px auto;
+            max-width: 840px;
+            margin: 0 auto 48px auto;
+            font-weight: 400;
         }
 
         .cta-group {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             justify-content: center;
             flex-wrap: wrap;
         }
@@ -161,9 +188,9 @@
         .btn-primary {
             background: linear-gradient(135deg, var(--indigo-600), var(--indigo-700));
             color: white;
-            padding: 16px 32px;
+            padding: 18px 36px;
             border-radius: 12px;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 600;
             text-decoration: none;
             box-shadow: var(--shadow-lg);
@@ -179,9 +206,9 @@
             background: white;
             color: var(--slate-800);
             border: 1px solid var(--slate-200);
-            padding: 16px 32px;
+            padding: 18px 36px;
             border-radius: 12px;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 600;
             text-decoration: none;
             transition: background-color 0.2s, border-color 0.2s;
@@ -192,9 +219,189 @@
             border-color: var(--slate-700);
         }
 
+        /* DASHBOARD MOCKUP */
+        .dashboard-mockup {
+            max-width: 1000px;
+            margin: 60px auto 0 auto;
+            background: var(--slate-900);
+            border-radius: 20px;
+            border: 1px solid var(--slate-800);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .mock-header {
+            background: #1e293b;
+            padding: 14px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--slate-800);
+        }
+
+        .mock-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .mock-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #ef4444; }
+        .dot-yellow { background: #f59e0b; }
+        .dot-green { background: #10b981; }
+
+        .mock-title {
+            color: var(--slate-300);
+            font-size: 0.85rem;
+            font-family: monospace;
+        }
+
+        .mock-body {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .mock-body {
+                grid-template-columns: 1fr;
+            }
+            .mock-sidebar {
+                display: none;
+            }
+        }
+
+        .mock-sidebar {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-item {
+            color: var(--slate-300);
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .sidebar-item.active {
+            background: var(--indigo-600);
+            color: white;
+        }
+
+        .sidebar-item:not(.active):hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .mock-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .mock-widget-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .mock-widget-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .mock-widget {
+            background: #1e293b;
+            border: 1px solid var(--slate-800);
+            border-radius: 14px;
+            padding: 20px;
+        }
+
+        .widget-title {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .widget-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            font-family: 'Lexend', sans-serif;
+        }
+
+        .widget-meta {
+            font-size: 0.8rem;
+            color: var(--emerald-500);
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .mock-lead-card {
+            background: #1e293b;
+            border: 1px solid var(--slate-800);
+            border-radius: 14px;
+            padding: 24px;
+        }
+
+        .lead-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--slate-800);
+            padding-bottom: 14px;
+            margin-bottom: 14px;
+        }
+
+        .lead-name {
+            font-weight: 700;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .lead-score {
+            background: var(--indigo-600);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 999px;
+        }
+
+        .lead-summary-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+
+        .lead-summary-box strong {
+            color: white;
+        }
+
         /* PROBLEM SECTION */
         .problem-section {
-            padding: 80px 0;
+            padding: 100px 0;
             background-color: white;
             border-top: 1px solid var(--slate-200);
             border-bottom: 1px solid var(--slate-200);
@@ -202,43 +409,49 @@
 
         .section-header {
             text-align: center;
-            max-width: 700px;
-            margin: 0 auto 50px auto;
+            max-width: 760px;
+            margin: 0 auto 60px auto;
         }
 
         .section-header h2 {
-            font-size: 2.25rem;
-            margin-bottom: 16px;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
         }
 
         .section-header p {
-            font-size: 1.1rem;
-            color: var(--slate-700);
+            font-size: 1.2rem;
+            color: var(--slate-600);
         }
 
         .problem-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
 
         .problem-card {
             background-color: var(--slate-50);
-            border-left: 4px solid #ef4444;
-            padding: 24px;
-            border-radius: 0 12px 12px 0;
+            border-left: 5px solid var(--rose-500);
+            padding: 30px;
+            border-radius: 0 16px 16px 0;
             box-shadow: var(--shadow-sm);
         }
 
         .problem-card h4 {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: var(--slate-900);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+        }
+
+        .problem-card p {
+            color: var(--slate-600);
+            font-size: 0.95rem;
         }
 
         /* FEATURES SECTION */
         .features-section {
-            padding: 80px 0;
+            padding: 100px 0;
         }
 
         .features-grid {
@@ -250,10 +463,10 @@
         .feature-card {
             background-color: white;
             border: 1px solid var(--slate-200);
-            border-radius: 16px;
-            padding: 30px;
+            border-radius: 20px;
+            padding: 35px;
             box-shadow: var(--shadow-sm);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
         }
 
         .feature-card:hover {
@@ -266,23 +479,24 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 48px;
-            height: 48px;
+            width: 56px;
+            height: 56px;
             background-color: #e0e7ff;
             color: var(--indigo-600);
-            border-radius: 12px;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
+            border-radius: 14px;
+            font-size: 1.8rem;
+            margin-bottom: 24px;
         }
 
         .feature-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 12px;
+            font-size: 1.4rem;
+            margin-bottom: 14px;
         }
 
         .feature-card p {
-            color: var(--slate-700);
-            font-size: 0.95rem;
+            color: var(--slate-600);
+            font-size: 1rem;
+            margin-bottom: 15px;
         }
 
         .feature-tag {
@@ -291,10 +505,10 @@
             color: var(--slate-700);
             font-size: 0.75rem;
             font-weight: 600;
-            padding: 3px 10px;
+            padding: 4px 12px;
             border-radius: 9999px;
-            margin-top: 15px;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .feature-tag-ai {
@@ -304,9 +518,10 @@
 
         /* INTERACTIVE SCOPE CALCULATOR */
         .calculator-section {
-            padding: 80px 0;
+            padding: 100px 0;
             background: linear-gradient(135deg, var(--slate-900), var(--slate-800));
             color: white;
+            border-top: 1px solid var(--slate-800);
         }
 
         .calculator-section h2, .calculator-section p, .calculator-section h3 {
@@ -314,33 +529,35 @@
         }
 
         .calculator-wrapper {
-            background-color: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            margin-top: 40px;
+            background-color: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 45px;
+            margin-top: 50px;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 50px;
+            box-shadow: var(--shadow-xl);
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 860px) {
             .calculator-wrapper {
                 grid-template-columns: 1fr;
+                padding: 30px;
             }
         }
 
         .calc-form {
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 30px;
         }
 
         .calc-group h4 {
             font-family: 'Lexend', sans-serif;
-            font-size: 1.1rem;
-            margin-bottom: 12px;
+            font-size: 1.25rem;
+            margin-bottom: 16px;
             color: var(--amber-500);
         }
 
@@ -362,106 +579,140 @@
 
         .calc-radio-label {
             display: block;
-            background-color: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 12px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 16px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s;
+            font-weight: 600;
         }
 
         .calc-radio input:checked + .calc-radio-label {
-            background-color: var(--indigo-600);
+            background: linear-gradient(135deg, var(--indigo-600), var(--indigo-700));
             border-color: var(--indigo-600);
-            box-shadow: 0 0 10px rgba(79, 70, 229, 0.5);
+            box-shadow: 0 0 15px rgba(79, 70, 229, 0.4);
         }
 
         .calc-checkbox {
-            display: block;
-            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background-color: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px 20px;
+            border-radius: 12px;
+            margin-bottom: 12px;
             cursor: pointer;
             user-select: none;
+            transition: background 0.2s;
+        }
+
+        .calc-checkbox:hover {
+            background-color: rgba(255, 255, 255, 0.08);
         }
 
         .calc-checkbox input {
-            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--indigo-600);
+            cursor: pointer;
         }
 
         .calc-input {
             width: 100%;
-            background-color: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: white;
-            padding: 12px;
-            border-radius: 10px;
+            padding: 14px 20px;
+            border-radius: 12px;
             font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        .calc-input:focus {
+            outline: none;
+            border-color: var(--indigo-500);
+            background-color: rgba(255, 255, 255, 0.08);
         }
 
         .calc-result-panel {
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 16px;
-            padding: 30px;
+            background-color: rgba(0, 0, 0, 0.25);
+            border-radius: 20px;
+            padding: 35px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .calc-result-panel h3 {
+            font-size: 1.4rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .calc-breakdown-row {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.95rem;
         }
 
-        .calc-breakdown-row:last-child {
+        .calc-breakdown-row:last-of-type {
             border-bottom: none;
         }
 
         .calc-breakdown-total {
-            font-size: 1.8rem;
+            font-size: 2rem;
             color: var(--amber-500);
-            font-weight: 700;
-            margin-top: 15px;
-            padding-top: 15px;
+            font-weight: 800;
+            margin-top: 24px;
+            padding-top: 24px;
             border-top: 2px dashed rgba(255, 255, 255, 0.2);
+            font-family: 'Lexend', sans-serif;
         }
 
         /* PRICING SECTION */
         .pricing-section {
-            padding: 80px 0;
+            padding: 100px 0;
             background-color: var(--slate-100);
+            border-bottom: 1px solid var(--slate-200);
         }
 
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
             align-items: stretch;
-            margin-top: 40px;
+            margin-top: 50px;
         }
 
         .pricing-card {
             background-color: white;
             border: 1px solid var(--slate-200);
-            border-radius: 20px;
-            padding: 40px;
+            border-radius: 24px;
+            padding: 45px;
             position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             box-shadow: var(--shadow-sm);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .pricing-card.popular {
-            border: 2px solid var(--indigo-600);
-            transform: scale(1.03);
+            border: 3px solid var(--indigo-600);
+            transform: scale(1.04);
             box-shadow: var(--shadow-xl);
             z-index: 10;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .pricing-card.popular {
                 transform: none;
             }
@@ -469,93 +720,154 @@
 
         .popular-badge {
             position: absolute;
-            top: -15px;
+            top: -18px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: var(--indigo-600);
+            background: linear-gradient(135deg, var(--indigo-600), #7c3aed);
             color: white;
             font-size: 0.8rem;
             font-weight: 700;
-            padding: 6px 18px;
+            padding: 8px 24px;
             border-radius: 9999px;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .pricing-header h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
+            font-size: 1.6rem;
+            margin-bottom: 12px;
         }
 
         .pricing-price {
-            font-size: 2.5rem;
-            font-weight: 800;
+            font-size: 3rem;
+            font-weight: 900;
             color: var(--slate-900);
-            margin: 20px 0;
+            margin: 24px 0;
             font-family: 'Lexend', sans-serif;
         }
 
         .pricing-price span {
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 500;
-            color: var(--slate-700);
+            color: var(--slate-600);
         }
 
         .pricing-features {
             list-style: none;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             flex-grow: 1;
         }
 
         .pricing-features li {
-            padding: 8px 0;
+            padding: 10px 0;
             display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.95rem;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 1rem;
         }
 
         .pricing-features li::before {
             content: '✓';
             color: var(--emerald-500);
+            font-weight: 900;
+        }
+
+        /* FAQS */
+        .faqs-section {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .faq-accordion {
+            max-width: 800px;
+            margin: 50px auto 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .faq-item {
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--indigo-500);
+        }
+
+        .faq-question {
+            background-color: var(--slate-50);
+            padding: 20px 24px;
+            font-family: 'Lexend', sans-serif;
+            font-size: 1.1rem;
             font-weight: 700;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            padding: 20px 24px;
+            border-top: 1px solid var(--slate-200);
+            color: var(--slate-600);
+            font-size: 1rem;
+            display: none;
         }
 
         /* TESTIMONIALS */
         .testimonials {
-            padding: 80px 0;
-            background-color: white;
+            padding: 100px 0;
+            background-color: var(--slate-50);
+            border-top: 1px solid var(--slate-200);
+            border-bottom: 1px solid var(--slate-200);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
         }
 
         .testimonial-card {
-            background-color: var(--slate-50);
+            background-color: white;
             border: 1px solid var(--slate-200);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 30px;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: var(--shadow-sm);
         }
 
         .testimonial-text {
             font-style: italic;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             font-size: 1.1rem;
+            color: var(--slate-800);
         }
 
         .testimonial-author {
-            font-weight: 600;
+            font-weight: 700;
             color: var(--slate-900);
+        }
+
+        .testimonial-title {
+            font-size: 0.85rem;
+            color: var(--slate-600);
         }
 
         /* FOOTER */
         footer {
             background-color: var(--slate-900);
             color: rgba(255, 255, 255, 0.6);
-            padding: 60px 0;
-            border-top: 1px solid var(--slate-800);
+            padding: 80px 0;
         }
 
         footer h4 {
             color: white;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         footer a {
@@ -570,15 +882,15 @@
 
         footer .footer-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 40px;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
         }
 
         footer .footer-bottom {
             text-align: center;
             border-top: 1px solid var(--slate-800);
-            padding-top: 30px;
+            padding-top: 40px;
         }
     </style>
 </head>
@@ -592,6 +904,7 @@
                 <a href="#features">Modules</a>
                 <a href="#calculator">Interactive Scope</a>
                 <a href="#pricing">Pricing</a>
+                <a href="#faqs">FAQ</a>
                 <a href="#pricing" class="cta-header-btn">Get Started</a>
             </nav>
         </div>
@@ -600,13 +913,66 @@
     <!-- HERO -->
     <section class="hero">
         <div class="container">
-            <span class="badge-promo">WordPress Native Agency OS</span>
+            <span class="badge-promo">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="margin-right:2px;"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                WordPress Native Agency OS
+            </span>
             <h1>Stop Managing Your Tools.<br><span>Start Scaling Your Agency.</span></h1>
             <p>Your Agency Is Losing 20% of Its Margin to "Tool Friction" and Admin Work. It's Time to Calibrate. Reclaim your time, impress your clients, and track every cent of profit with a native AI Copilot Engine built directly on WordPress.</p>
             <div class="cta-group">
                 <a href="#pricing" class="btn-primary">View Plans & Pricing</a>
                 <a href="#calculator" class="btn-secondary">Try Interactive Scope</a>
             </div>
+
+            <!-- DASHBOARD MOCKUP -->
+            <div class="dashboard-mockup">
+                <div class="mock-header">
+                    <div class="mock-dots">
+                        <span class="mock-dot dot-red"></span>
+                        <span class="mock-dot dot-yellow"></span>
+                        <span class="mock-dot dot-green"></span>
+                    </div>
+                    <div class="mock-title">wp-admin/admin.php?page=agency-nexus</div>
+                    <div style="width:50px;"></div>
+                </div>
+                <div class="mock-body">
+                    <div class="mock-sidebar">
+                        <div class="sidebar-item active">📈 CRM Dashboard</div>
+                        <div class="sidebar-item">💼 Scope Builder</div>
+                        <div class="sidebar-item">📅 Content Calendar</div>
+                        <div class="sidebar-item">💰 MoneyFlow ROI</div>
+                        <div class="sidebar-item">💬 Client Portal</div>
+                    </div>
+                    <div class="mock-content">
+                        <div class="mock-widget-grid">
+                            <div class="mock-widget">
+                                <div class="widget-title">Project Profitability</div>
+                                <div class="widget-value" style="color:var(--emerald-500);">$8,450.00</div>
+                                <div class="widget-meta">
+                                    <span>▲ 18.5% margin growth</span>
+                                </div>
+                            </div>
+                            <div class="mock-widget">
+                                <div class="widget-title">Active Time Logged</div>
+                                <div class="widget-value" style="color:var(--amber-500);">32.5 hrs</div>
+                                <div class="widget-meta" style="color:#94a3b8;">
+                                    <span>Focus Mode Active</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mock-lead-card">
+                            <div class="lead-header">
+                                <span class="lead-name">Alex Rivera (Zenith Agency)</span>
+                                <span class="lead-score">Lead Score: 92</span>
+                            </div>
+                            <div class="lead-summary-box">
+                                <strong>AI Executive Summary:</strong> Target requires a comprehensive website rebuild and high-ticket SEO marketing retainer ($5,000 budget). Extremely high intent—ready to start next Tuesday.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -620,15 +986,15 @@
             <div class="problem-grid">
                 <div class="problem-card">
                     <h4>High Tab Tax</h4>
-                    <p>Paying $300+/month in software subscriptions just to manage the work, let alone do it.</p>
+                    <p>Paying $300+/month in software subscriptions just to manage the work, let alone do it. Switch to WordPress native operations and save thousands.</p>
                 </div>
                 <div class="problem-card">
                     <h4>Communication Fatigue</h4>
-                    <p>Clients are confused and you spend 20 minutes digging through threads just to find a status.</p>
+                    <p>Clients are confused by messy email chains. Switch to a 100% white-labeled client portal that organizes conversations, files, and payments.</p>
                 </div>
                 <div class="problem-card">
                     <h4>Manual Labor</h4>
-                    <p>Chasing late invoices, manually drafting scope items, and writing step-by-step SOP briefings.</p>
+                    <p>Chasing late invoices, manually drafting scope items, and writing step-by-step SOP briefings. Let the AI Copilot automate your operations.</p>
                 </div>
             </div>
         </div>
@@ -697,7 +1063,7 @@
                     <span class="feature-tag">Time</span>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">Vault</div>
+                    <div class="feature-icon">📁</div>
                     <h3>FreebieFactory</h3>
                     <p>Manage your agency's intellectual property. Store SOPs, contract templates, and optimize client discovery questionnaires using AI to ensure client compliance.</p>
                     <span class="feature-tag feature-tag-ai">AI CoPilot Enabled</span>
@@ -841,6 +1207,34 @@
         </div>
     </section>
 
+    <!-- FAQS -->
+    <section id="faqs" class="faqs-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know about the WordPress-native Agency OS.</p>
+            </div>
+            <div class="faq-accordion">
+                <div class="faq-item">
+                    <div class="faq-question">What is a WordPress-native Agency OS? <span>+</span></div>
+                    <div class="faq-answer">Unlike expensive monthly SaaS systems (Asana, ClickUp, HubSpot) that live on external servers and track your data, Agency Nexus is a plugin that installs directly on your WordPress website. This means you own your data 100%, pay zero monthly "tab taxes", and can fully white-label the entire portal experience for your clients.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">How does the Scope Builder Pricing Computation work? <span>+</span></div>
+                    <div class="faq-answer">The Scope Builder is mathematically precise. You select a base scale budget (Small/Medium/Large) and toggle your service add-ons. You can input flat or percentage-based discounts directly into the "Special Terms" field, and the system automatically calculates the subtotal, subtracts the discount exactly, and creates a clean pricing breakdown inside the client proposal description.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Can I use my own AI Provider? <span>+</span></div>
+                    <div class="faq-answer">Yes! Under Settings, you can enable the AI suite and select your preferred LLM provider—including OpenAI (ChatGPT), Google Gemini, or Anthropic Claude. Simply input your API key. If keys are missing, the system gracefully falls back to our local, built-in offline mock engine to keep the client UI unblocked.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Is there a money-back guarantee? <span>+</span></div>
+                    <div class="faq-answer">Absolutely. We offer an unconditional 30-day money-back guarantee. If Agency Nexus doesn't save you time and consolidate your tech stack, simply contact our support team for a full refund.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- TESTIMONIALS -->
     <section class="testimonials">
         <div class="container">
@@ -848,9 +1242,17 @@
                 <h2>Loved by Service Providers Worldwide</h2>
                 <p>Join 1,000+ agency owners who have unified their operations and eliminated the Frankenstein stack.</p>
             </div>
-            <div class="testimonial-card">
-                <p class="testimonial-text">"Before Agency Nexus, I was spending over $350/mo across five different tools. Client communication was scattered in emails and Slack, and invoices were tracked in Google Sheets. Unifying my CRM, Scope Builder, and Projects on WordPress has reclaimed my focus and saved me thousands!"</p>
-                <div class="testimonial-author">Alex Rivera, Founder of Zenith Design Agency</div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Before Agency Nexus, I was spending over $350/mo across five different tools. Client communication was scattered in emails and Slack, and invoices were tracked in Google Sheets. Unifying my CRM, Scope Builder, and Projects on WordPress has reclaimed my focus and saved me thousands!"</p>
+                    <div class="testimonial-author">Alex Rivera</div>
+                    <div class="testimonial-title">Founder, Zenith Design Agency</div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"The mathematically exact Scope Builder and AI content refiner are total game changers. I can build proposals on sales calls, apply discounts, and get signed contracts instantly. My close rate skyrocketed from 35% to 65%!"</p>
+                    <div class="testimonial-author">Sarah Chen</div>
+                    <div class="testimonial-title">Director of Growth, Apex Marketing</div>
+                </div>
             </div>
         </div>
     </section>
@@ -885,6 +1287,7 @@
     <!-- INTERACTIVE SCRIPT -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Interactive Scope Calculator
             const scaleInputs = document.querySelectorAll('input[name="calc-scale"]');
             const addonCheckboxes = document.querySelectorAll('.calc-addon');
             const specialTermsInput = document.getElementById('calc-special-terms');
@@ -953,6 +1356,28 @@
 
             // Initial computation
             updatePrice();
+
+            // FAQ Accordion
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+                const span = question.querySelector('span');
+
+                question.addEventListener('click', () => {
+                    const isOpen = answer.style.display === 'block';
+                    // Close all
+                    faqItems.forEach(i => {
+                        i.querySelector('.faq-answer').style.display = 'none';
+                        i.querySelector('.faq-question span').textContent = '+';
+                    });
+
+                    if (!isOpen) {
+                        answer.style.display = 'block';
+                        span.textContent = '-';
+                    }
+                });
+            });
         });
     </script>
 </body>
